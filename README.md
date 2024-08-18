@@ -41,7 +41,9 @@ FulfillSpigot includes patches from other spigots as well:
 - **KigPaper**
 - **Tuinity**
 - **FlamePaper**
-- **FulfillSpigot** (containing its own custom patches) 
+- **FulfillSpigot** (containing its own custom patches)
+
+- Note: The server connection class is from another Spigot, though I can't remember its name. This class was given to me by someone who may own that Spigot, so credit goes to them.
 
 Please ensure **all credits** are properly given if you decide to use patches from FulfillSpigot in your own projects.
 
