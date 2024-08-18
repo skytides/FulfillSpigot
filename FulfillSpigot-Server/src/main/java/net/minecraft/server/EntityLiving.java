@@ -923,7 +923,6 @@ public abstract class EntityLiving extends Entity {
         double startRangeReduction = kb.getStartRangeReduction();
         double maxRangeReduction = kb.getMaxRangeReduction();
 
-        // Modified range calculation to keep spacing consistent
         double modifiedRange = knockbackRangeFactor * (distance - startRangeReduction);
         return Math.min(modifiedRange, maxRangeReduction);
     }
