@@ -41,7 +41,7 @@ FulfillSpigot includes patches from other spigots as well:
 - **KigPaper**
 - **Tuinity**
 - **FlamePaper**
-- **FulfillSpigot** 
+- **FulfillSpigot** (containing its own custom patches) 
 
 Please ensure **all credits** are properly given if you decide to use patches from FulfillSpigot in your own projects.
 
