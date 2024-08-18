@@ -4,6 +4,11 @@ Fulfill Spigot is the top choice for a highly optimized 1.8.8 Spigot fork, speci
 
 This Spigot is perfect for practice servers and 1.8.8 minigames like Bedwars, Skywars, and more, ensuring a smooth and competitive gameplay experience.
 
+Commands:
+- /loadedchunks (allows you to unload chunks and provides a nice list on every loaded chunk)
+- /knockback (Shows the knockback help menu)
+- /ping
+
 Optimizations:
 - Velocity Packet Compression/Decompression and Encryption/Decryption: Efficiently handles packet data, reducing latency and improving server performance.
 - Stable 20 TPS with 500+ Bots in 3 Different Worlds: Maintains consistent server performance even under heavy load.
