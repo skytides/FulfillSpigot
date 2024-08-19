@@ -52,5 +52,7 @@ FulfillSpigot includes patches from other spigots as well:
 
 Please ensure **all credits** are properly given if you decide to use patches from FulfillSpigot in your own projects.
 
+PS: I will continue the development again if we reach 100 stars.
+
 _Development started: 07/04/2023_  
 _Abandoned: 08/18/2024_
