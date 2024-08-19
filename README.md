@@ -32,7 +32,7 @@ To compile FulfillSpigot, you'll need:
 - **JDK 8** (or above)
 - Use the `build` command from Gradle.
 
-## Credits
+## Team
 
 - **Steven**: Author of FulfillSpigot.
 - **Savrien**: Original creator of the knockback system and a valued member of our development team.
