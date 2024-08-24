@@ -1,5 +1,7 @@
 # FulfillSpigot
 
+[![Discord](https://img.shields.io/discord/1048733138655924274?label=Discord)](https://discord.gg/qDtjyaGZvm)
+
 Fulfill Spigot is the top choice for a highly optimized 1.8.8 Spigot fork, specifically designed to boost performance and perfectly replicate almost the exact same Minemen Club's (ClubSpigot) mechanics, As well as extremely great NMS optimizationsn and much more.
 
 This Spigot is perfect for practice servers and 1.8.8 minigames like Bedwars, Skywars, and more, ensuring a smooth and competitive gameplay experience.
