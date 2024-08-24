@@ -55,4 +55,3 @@ Please ensure **all credits** are properly given if you decide to use patches fr
 PS: I will continue the development again if we reach 100 stars.
 
 _Development started: 07/04/2023_  
-_Abandoned: 08/18/2024_
