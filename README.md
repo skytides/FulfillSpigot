@@ -21,7 +21,7 @@ Optimizations:
 - Optimized Garbage Collection: Reduces memory overhead and minimizes server pauses.
 - Thread Pool Management: Efficiently manages thread pools to enhance server responsiveness.
 - Database Query Optimization: Speeds up database interactions, reducing latency.
-- 1:1 Replica of Minemen Club's Knockback Mechanics: Replicates 60% of minemen clubs knockback.
+- Similar knockback mechanics to minemenclub: Replicates 60% of minemen clubs knockback.
 - Customizable pots throwing mechanics
 - PlayerHealthChangeEvent
 - ASYNC Chunk Loading & Generating
