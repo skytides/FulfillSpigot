@@ -2,6 +2,7 @@ package org.bukkit.entity;
 
 import java.net.InetSocketAddress;
 
+import com.destroystokyo.paper.paper.profile.PlayerProfile;
 import org.bukkit.Achievement;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
@@ -1204,14 +1205,14 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
      * Gets a copy of this players profile
      * @return The players profile object
      */
-    com.destroystokyo.paper.profile.PlayerProfile getPlayerProfile();
+    PlayerProfile getPlayerProfile();
     
     /**
      * Changes the PlayerProfile for this player. This will cause this player
      * to be reregistered to all clients that can currently see this player
      * @param profile The new profile to use
      */
-    void setPlayerProfile(com.destroystokyo.paper.profile.PlayerProfile profile);
+    void setPlayerProfile(PlayerProfile profile);
 
     /**
      * Send the equipment change of an entity. This fakes the equipment change

@@ -2,6 +2,7 @@ package net.minecraft.server;
 
 import java.util.List;
 
+import com.destroystokyo.paper.paper.event.entity.ProjectileCollideEvent;
 import org.bukkit.craftbukkit.event.CraftEventFactory; // CraftBukkit
 
 public abstract class EntityFireball extends Entity {
@@ -128,7 +129,7 @@ public abstract class EntityFireball extends Entity {
 
             // PandaSpigot start - Call ProjectileCollideEvent
             if (movingobjectposition != null && movingobjectposition.entity != null) {
-                com.destroystokyo.paper.event.entity.ProjectileCollideEvent event = org.bukkit.craftbukkit.event.CraftEventFactory.callProjectileCollideEvent(this, movingobjectposition);
+                ProjectileCollideEvent event = org.bukkit.craftbukkit.event.CraftEventFactory.callProjectileCollideEvent(this, movingobjectposition);
                 if (event.isCancelled()) {
                     movingobjectposition = null;
                 }

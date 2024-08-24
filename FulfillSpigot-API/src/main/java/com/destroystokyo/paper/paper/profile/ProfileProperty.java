@@ -1,4 +1,4 @@
-package com.destroystokyo.paper.profile;
+package com.destroystokyo.paper.paper.profile;
 
 import com.google.common.base.Preconditions;
 

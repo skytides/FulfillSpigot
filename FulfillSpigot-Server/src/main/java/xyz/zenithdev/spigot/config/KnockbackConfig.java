@@ -65,6 +65,7 @@ public class KnockbackConfig {
             profile.setMaxRangeReduction(getDouble(path + ".max-range-reduction", 1.2D));
             profile.setRangeFactor(getDouble(path + ".range-factor", 0.025D));
             profile.setMinRange(getDouble(path + ".min-range", 0.12D));
+            profile.setFriction(getDouble(path + ".friction", 2.0));
         }
 
         currentKb = getKbProfileByName(getString("knockback.current", "vanilla"));

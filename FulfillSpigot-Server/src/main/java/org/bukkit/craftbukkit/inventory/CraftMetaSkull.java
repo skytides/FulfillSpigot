@@ -2,6 +2,8 @@ package org.bukkit.craftbukkit.inventory;
 
 import java.util.Map;
 
+import com.destroystokyo.paper.paper.profile.PlayerProfile;
+import com.destroystokyo.paper.profile.CraftPlayerProfile;
 import net.minecraft.server.GameProfileSerializer;
 import net.minecraft.server.NBTBase;
 import net.minecraft.server.NBTTagCompound;
@@ -147,13 +149,13 @@ class CraftMetaSkull extends CraftMetaItem implements SkullMeta {
     }
     // PandaSpigot start - PlayerProfile API
     @Override
-    public com.destroystokyo.paper.profile.PlayerProfile getPlayerProfile() {
-        return this.profile != null ? com.destroystokyo.paper.profile.CraftPlayerProfile.asBukkitCopy(this.profile) : null;
+    public PlayerProfile getPlayerProfile() {
+        return this.profile != null ? CraftPlayerProfile.asBukkitCopy(this.profile) : null;
     }
     
     @Override
-    public void setPlayerProfile(com.destroystokyo.paper.profile.PlayerProfile profile) {
-        this.profile = com.destroystokyo.paper.profile.CraftPlayerProfile.asAuthlibCopy(profile);
+    public void setPlayerProfile(PlayerProfile profile) {
+        this.profile = CraftPlayerProfile.asAuthlibCopy(profile);
     }
     // PandaSpigot end
 

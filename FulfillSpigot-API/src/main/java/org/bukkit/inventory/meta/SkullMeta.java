@@ -1,5 +1,6 @@
 package org.bukkit.inventory.meta;
 
+import com.destroystokyo.paper.paper.profile.PlayerProfile;
 import org.bukkit.Material;
 
 /**
@@ -37,13 +38,13 @@ public interface SkullMeta extends ItemMeta {
      * Sets this skull to use the supplied Player Profile, which can include textures already prefilled.
      * @param profile The profile to set this Skull to use, or null to clear owner
      */
-    void setPlayerProfile(com.destroystokyo.paper.profile.PlayerProfile profile);
+    void setPlayerProfile(PlayerProfile profile);
     
     /**
-     * If the skull has an owner, per {@link #hasOwner()}, return the owners {@link com.destroystokyo.paper.profile.PlayerProfile}
+     * If the skull has an owner, per {@link #hasOwner()}, return the owners {@link PlayerProfile}
      * @return The profile of the owner, if set
      */
-    com.destroystokyo.paper.profile.PlayerProfile getPlayerProfile();
+    PlayerProfile getPlayerProfile();
     // PandaSpigot end
 
     SkullMeta clone();

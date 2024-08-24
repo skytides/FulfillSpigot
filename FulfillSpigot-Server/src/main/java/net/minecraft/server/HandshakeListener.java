@@ -1,6 +1,8 @@
 package net.minecraft.server;
 
 // CraftBukkit start
+import com.destroystokyo.paper.paper.event.player.PlayerHandshakeEvent;
+
 import java.net.InetAddress;
 import java.util.HashMap;
 // CraftBukkit end
@@ -78,10 +80,10 @@ public class HandshakeListener implements PacketHandshakingInListener {
                 boolean proxyLogicEnabled = org.spigotmc.SpigotConfig.bungee;
                 boolean handledByEvent = false;
                 // Try and handle the handshake through the event
-                if (com.destroystokyo.paper.event.player.PlayerHandshakeEvent.getHandlerList().getRegisteredListeners().length != 0) { // Hello? Can you hear me?
+                if (PlayerHandshakeEvent.getHandlerList().getRegisteredListeners().length != 0) { // Hello? Can you hear me?
                     java.net.SocketAddress socketAddress = this.b.l;
                     String hostnameOfRemote = socketAddress instanceof java.net.InetSocketAddress ? ((java.net.InetSocketAddress) socketAddress).getHostString() : InetAddress.getLoopbackAddress().getHostAddress();
-                    com.destroystokyo.paper.event.player.PlayerHandshakeEvent event = new com.destroystokyo.paper.event.player.PlayerHandshakeEvent(packethandshakinginsetprotocol.hostname, hostnameOfRemote, !proxyLogicEnabled);
+                    PlayerHandshakeEvent event = new PlayerHandshakeEvent(packethandshakinginsetprotocol.hostname, hostnameOfRemote, !proxyLogicEnabled);
                     if (event.callEvent()) {
                         // If we've failed somehow, let the client know so and go no further.
                         if (event.isFailed()) {

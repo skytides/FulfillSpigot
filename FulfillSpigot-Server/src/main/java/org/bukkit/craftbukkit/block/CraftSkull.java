@@ -1,5 +1,7 @@
 package org.bukkit.craftbukkit.block;
 
+import com.destroystokyo.paper.paper.profile.PlayerProfile;
+import com.destroystokyo.paper.profile.CraftPlayerProfile;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.TileEntitySkull;
@@ -174,13 +176,13 @@ public class CraftSkull extends CraftBlockState implements Skull {
 
     // PandaSpigot start - PlayerProfile API
     @Override
-    public com.destroystokyo.paper.profile.PlayerProfile getPlayerProfile() {
-        return com.destroystokyo.paper.profile.CraftPlayerProfile.asBukkitCopy(this.profile);
+    public PlayerProfile getPlayerProfile() {
+        return CraftPlayerProfile.asBukkitCopy(this.profile);
     }
     
     @Override
-    public void setPlayerProfile(com.destroystokyo.paper.profile.PlayerProfile profile) {
-        this.profile = com.destroystokyo.paper.profile.CraftPlayerProfile.asAuthlibCopy(profile);
+    public void setPlayerProfile(PlayerProfile profile) {
+        this.profile = CraftPlayerProfile.asAuthlibCopy(profile);
     }
     // PandaSpigot end
 

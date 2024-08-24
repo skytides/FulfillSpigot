@@ -1,5 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
+import com.destroystokyo.paper.paper.profile.PlayerProfile;
+import com.destroystokyo.paper.profile.CraftPlayerProfile;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.authlib.GameProfile;
@@ -66,7 +68,6 @@ import org.bukkit.plugin.messaging.StandardMessenger;
 import org.bukkit.scoreboard.Scoreboard;
 // PaperSpigot start
 import org.github.paperspigot.Title;
-import xyz.zenithdev.spigot.FulfillSpigot;
 import xyz.zenithdev.spigot.event.PlayerHealthChangeEvent;
 // PaperSpigot end
 
@@ -1023,9 +1024,9 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         }
     }
 
-    public void setPlayerProfile(com.destroystokyo.paper.profile.PlayerProfile profile) {
+    public void setPlayerProfile(PlayerProfile profile) {
         EntityPlayer self = getHandle();
-        self.setProfile(com.destroystokyo.paper.profile.CraftPlayerProfile.asAuthlibCopy(profile));
+        self.setProfile(CraftPlayerProfile.asAuthlibCopy(profile));
         List<EntityPlayer> players = server.getServer().getPlayerList().players;
         for (EntityPlayer player : players) {
             player.getBukkitEntity().reregisterPlayer(self);
@@ -1033,8 +1034,8 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         refreshPlayer();
     }
 
-    public com.destroystokyo.paper.profile.PlayerProfile getPlayerProfile() {
-        return new com.destroystokyo.paper.profile.CraftPlayerProfile(this).clone();
+    public PlayerProfile getPlayerProfile() {
+        return new CraftPlayerProfile(this).clone();
     }
     
     private void refreshPlayer() {

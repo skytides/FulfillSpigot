@@ -2,6 +2,7 @@ package xyz.zenithdev.spigot.console;
 
 import net.minecraft.server.DedicatedServer;
 import net.minecrell.terminalconsole.SimpleTerminalConsole;
+import org.jetbrains.annotations.NotNull;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 
@@ -30,7 +31,7 @@ public class FulfillConsole extends SimpleTerminalConsole {
     }
 
     @Override
-    protected LineReader buildReader(LineReaderBuilder builder) {
+    protected LineReader buildReader(@NotNull LineReaderBuilder builder) {
         return super.buildReader(builder
             .appName("PandaSpigot")
             .variable(LineReader.HISTORY_FILE, Paths.get(".console_history"))

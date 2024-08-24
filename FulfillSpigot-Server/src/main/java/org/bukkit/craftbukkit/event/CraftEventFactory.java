@@ -6,6 +6,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
+import com.destroystokyo.paper.paper.event.entity.ProjectileCollideEvent;
 import com.google.common.base.Function;
 import com.google.common.base.Functions;
 
@@ -753,10 +754,10 @@ public class CraftEventFactory {
     }
 
     // PandaSpigot start
-    public static com.destroystokyo.paper.event.entity.ProjectileCollideEvent callProjectileCollideEvent(Entity entity, MovingObjectPosition position) {
+    public static ProjectileCollideEvent callProjectileCollideEvent(Entity entity, MovingObjectPosition position) {
         Projectile projectile = (Projectile) entity.getBukkitEntity();
         org.bukkit.entity.Entity collided = position.entity.getBukkitEntity();
-        com.destroystokyo.paper.event.entity.ProjectileCollideEvent event = new com.destroystokyo.paper.event.entity.ProjectileCollideEvent(projectile, collided);
+        ProjectileCollideEvent event = new ProjectileCollideEvent(projectile, collided);
         Bukkit.getPluginManager().callEvent(event);
         return event;
     }

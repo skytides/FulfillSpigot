@@ -923,7 +923,6 @@ public abstract class EntityLiving extends Entity {
         double startRangeReduction = kb.getStartRangeReduction();
         double maxRangeReduction = kb.getMaxRangeReduction();
 
-        // Modified range calculation to keep spacing consistent
         double modifiedRange = knockbackRangeFactor * (distance - startRangeReduction);
         return Math.min(modifiedRange, maxRangeReduction);
     }
@@ -943,7 +942,7 @@ public abstract class EntityLiving extends Entity {
             double knockbackHorizontal = kb.getHorizontal();
             double knockbackVertical = kb.getVertical();
 
-            double frictionHorizontal = 2.0 - (1.0 - knockbackHorizontal);
+            double frictionHorizontal = kb.getFriction() - (1.0 - knockbackHorizontal);
 
             float f1 = MathHelper.sqrt(x * x + z * z);
 

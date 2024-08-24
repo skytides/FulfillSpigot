@@ -1,5 +1,7 @@
 package net.minecraft.server;
 
+import com.destroystokyo.paper.paper.profile.PlayerProfile;
+import com.destroystokyo.paper.profile.CraftPlayerProfile;
 import com.google.common.base.Charsets;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.exceptions.AuthenticationUnavailableException;
@@ -259,12 +261,12 @@ public class LoginListener implements PacketLoginInListener, IUpdatePlayerListBo
                             final org.bukkit.craftbukkit.CraftServer server = LoginListener.this.server.server;
 
                             // PandaSpigot start - Ability to change PlayerProfile in AsyncPreLoginEvent
-                            com.destroystokyo.paper.profile.PlayerProfile profile = com.destroystokyo.paper.profile.CraftPlayerProfile.asBukkitCopy(i);
+                            PlayerProfile profile = CraftPlayerProfile.asBukkitCopy(i);
                             AsyncPlayerPreLoginEvent asyncEvent = new AsyncPlayerPreLoginEvent(playerName, address, uniqueId, profile);
                             server.getPluginManager().callEvent(asyncEvent);
                             profile = asyncEvent.getPlayerProfile();
                             profile.complete();
-                            i = com.destroystokyo.paper.profile.CraftPlayerProfile.asAuthlib(profile);
+                            i = CraftPlayerProfile.asAuthlib(profile);
                             playerName = i.getName();
                             uniqueId = i.getId();
                             // PandaSpigot end

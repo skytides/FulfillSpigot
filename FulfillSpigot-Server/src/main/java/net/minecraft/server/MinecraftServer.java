@@ -1,5 +1,7 @@
 package net.minecraft.server;
 
+import com.destroystokyo.paper.paper.event.server.ServerTickEndEvent;
+import com.destroystokyo.paper.paper.event.server.ServerTickStartEvent;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.Futures;
@@ -841,7 +843,7 @@ public abstract class MinecraftServer extends ReentrantIAsyncHandler<TasksPerTic
         isOversleep = true;
         this.controlTerminate(() -> !this.canOversleep());
         isOversleep = false;
-        this.server.getPluginManager().callEvent(new com.destroystokyo.paper.event.server.ServerTickStartEvent(this.ticks+1));
+        this.server.getPluginManager().callEvent(new ServerTickStartEvent(this.ticks+1));
         // PandaSpigot end
 
         ++this.ticks;
@@ -890,8 +892,8 @@ public abstract class MinecraftServer extends ReentrantIAsyncHandler<TasksPerTic
         long endTime = System.nanoTime();
         long remaining = (TICK_TIME - (endTime - lastTick)) - catchupTime;
         this.lastMspt = ((double) (endTime - lastTick) / 1000000D);
-        this.server.getPluginManager().callEvent(new com.destroystokyo.paper.event.server.ServerTickEndEvent(this.ticks, ((double)(endTime - lastTick) / 1000000D), remaining));
-        this.server.getPluginManager().callEvent(new com.destroystokyo.paper.event.server.ServerTickEndEvent(this.ticks, this.lastMspt, remaining));
+        this.server.getPluginManager().callEvent(new ServerTickEndEvent(this.ticks, ((double)(endTime - lastTick) / 1000000D), remaining));
+        this.server.getPluginManager().callEvent(new ServerTickEndEvent(this.ticks, this.lastMspt, remaining));
         // PandaSpigot end
         this.methodProfiler.a("tallying");
         this.h[this.ticks % 100] = System.nanoTime() - i;

@@ -1,4 +1,4 @@
-package com.destroystokyo.paper.event.entity;
+package com.destroystokyo.paper.paper.event.entity;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Projectile;

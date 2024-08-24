@@ -21,7 +21,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.destroystokyo.paper.event.server;
+package com.destroystokyo.paper.paper.event.server;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.Location;

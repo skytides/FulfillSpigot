@@ -1,4 +1,4 @@
-package com.destroystokyo.paper.event.server;
+package com.destroystokyo.paper.paper.event.server;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;

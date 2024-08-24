@@ -1,4 +1,4 @@
-package com.destroystokyo.paper.profile;
+package com.destroystokyo.paper.paper.profile;
 
 import java.util.Collection;
 import java.util.Set;

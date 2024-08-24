@@ -3,6 +3,7 @@ package org.bukkit.event.player;
 import java.net.InetAddress;
 import java.util.UUID;
 
+import com.destroystokyo.paper.paper.profile.PlayerProfile;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -28,13 +29,13 @@ public class AsyncPlayerPreLoginEvent extends Event {
     public AsyncPlayerPreLoginEvent(final String name, final InetAddress ipAddress, final UUID uniqueId) {
         this(name, ipAddress, uniqueId, org.bukkit.Bukkit.createProfile(uniqueId, name));
     }
-    private com.destroystokyo.paper.profile.PlayerProfile profile;
+    private PlayerProfile profile;
 
     /**
      * Gets the PlayerProfile of the player logging in
      * @return The Profile
      */
-    public com.destroystokyo.paper.profile.PlayerProfile getPlayerProfile() {
+    public PlayerProfile getPlayerProfile() {
         return profile;
     }
 
@@ -42,11 +43,11 @@ public class AsyncPlayerPreLoginEvent extends Event {
      * Changes the PlayerProfile the player will login as
      * @param profile The profile to use
      */
-    public void setPlayerProfile(com.destroystokyo.paper.profile.PlayerProfile profile) {
+    public void setPlayerProfile(PlayerProfile profile) {
         this.profile = profile;
     }
 
-    public AsyncPlayerPreLoginEvent(final String name, final InetAddress ipAddress, final UUID uniqueId, final com.destroystokyo.paper.profile.PlayerProfile profile) {
+    public AsyncPlayerPreLoginEvent(final String name, final InetAddress ipAddress, final UUID uniqueId, final PlayerProfile profile) {
         super(true);
         this.profile = profile;
     // PandaSpigot end

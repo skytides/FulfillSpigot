@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import com.destroystokyo.paper.paper.event.entity.ProjectileCollideEvent;
 import xyz.zenithdev.spigot.config.FulfillSpigotConfig;
 
 import java.util.List;
@@ -164,7 +165,7 @@ public abstract class EntityProjectile extends Entity implements IProjectile {
 
         // PandaSpigot start - Call ProjectileCollideEvent
         if (movingobjectposition != null && movingobjectposition.entity != null) {
-            com.destroystokyo.paper.event.entity.ProjectileCollideEvent event = org.bukkit.craftbukkit.event.CraftEventFactory.callProjectileCollideEvent(this, movingobjectposition);
+            ProjectileCollideEvent event = org.bukkit.craftbukkit.event.CraftEventFactory.callProjectileCollideEvent(this, movingobjectposition);
             if (event.isCancelled()) {
                 movingobjectposition = null;
             }

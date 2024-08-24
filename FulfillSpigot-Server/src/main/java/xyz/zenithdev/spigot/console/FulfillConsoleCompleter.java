@@ -1,5 +1,6 @@
 package xyz.zenithdev.spigot.console;
 
+import com.destroystokyo.paper.paper.event.server.AsyncTabCompleteEvent;
 import net.minecraft.server.DedicatedServer;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.util.Waitable;
@@ -24,9 +25,9 @@ public class FulfillConsoleCompleter implements Completer {
     @Override
     public void complete(LineReader reader, ParsedLine line, List<Candidate> candidates) {
         // Async Tab Completion
-        com.destroystokyo.paper.event.server.AsyncTabCompleteEvent event;
+        AsyncTabCompleteEvent event;
         List<String> completions = new java.util.ArrayList<>();
-        event = new com.destroystokyo.paper.event.server.AsyncTabCompleteEvent(server.server.getConsoleSender(), completions, line.line(), true, null);
+        event = new AsyncTabCompleteEvent(server.server.getConsoleSender(), completions, line.line(), true, null);
         event.callEvent();
         completions = event.isCancelled() ? com.google.common.collect.ImmutableList.of() : event.getCompletions();
 

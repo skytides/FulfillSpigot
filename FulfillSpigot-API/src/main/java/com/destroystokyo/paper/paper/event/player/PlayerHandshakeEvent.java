@@ -1,4 +1,4 @@
-package com.destroystokyo.paper.event.player;
+package com.destroystokyo.paper.paper.event.player;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.event.Cancellable;

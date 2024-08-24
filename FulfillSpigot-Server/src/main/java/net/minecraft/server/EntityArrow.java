@@ -3,6 +3,7 @@ package net.minecraft.server;
 import java.util.List;
 
 // CraftBukkit start
+import com.destroystokyo.paper.paper.event.entity.ProjectileCollideEvent;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityCombustByEntityEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
@@ -232,7 +233,7 @@ public class EntityArrow extends Entity implements IProjectile {
 
             // PandaSpigot start - Call ProjectileCollideEvent
             if (movingobjectposition != null && movingobjectposition.entity != null) {
-                com.destroystokyo.paper.event.entity.ProjectileCollideEvent event = org.bukkit.craftbukkit.event.CraftEventFactory.callProjectileCollideEvent(this, movingobjectposition);
+                ProjectileCollideEvent event = org.bukkit.craftbukkit.event.CraftEventFactory.callProjectileCollideEvent(this, movingobjectposition);
                 if (event.isCancelled()) {
                     movingobjectposition = null;
                 }

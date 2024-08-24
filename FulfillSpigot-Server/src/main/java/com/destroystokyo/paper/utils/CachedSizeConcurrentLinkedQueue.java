@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.LongAdder;
 
 public class CachedSizeConcurrentLinkedQueue<E> extends ConcurrentLinkedQueue<E> {
     private final LongAdder cachedSize = new LongAdder();
-    
+
     @Override
     public boolean add(E e) {
         boolean result = super.add(e);
@@ -14,7 +14,7 @@ public class CachedSizeConcurrentLinkedQueue<E> extends ConcurrentLinkedQueue<E>
         }
         return result;
     }
-    
+
     @Override
     public E poll() {
         E result = super.poll();
@@ -23,7 +23,7 @@ public class CachedSizeConcurrentLinkedQueue<E> extends ConcurrentLinkedQueue<E>
         }
         return result;
     }
-    
+
     @Override
     public int size() {
         return cachedSize.intValue();

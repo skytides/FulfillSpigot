@@ -1,6 +1,5 @@
 package xyz.zenithdev.spigot.knockback;
 
-
 import lombok.Getter;
 import lombok.Setter;
 import xyz.zenithdev.spigot.config.KnockbackConfig;
@@ -20,6 +19,7 @@ public class CraftKnockbackProfile implements KnockbackProfile {
     private double maxRangeReduction = 1.2D;
     private double startRangeReduction = 3.0D;
     private double minRange = 0.12D;
+    private double friction = 2.0D;
 
     public CraftKnockbackProfile(String name) {
         this.name = name;
@@ -44,6 +44,7 @@ public class CraftKnockbackProfile implements KnockbackProfile {
         set(".max-range-reduction", this.maxRangeReduction);
         set(".start-range-reduction", this.startRangeReduction);
         set(".min-range", this.minRange);
+        set(".friction", this.friction);
         KnockbackConfig.save();
     }
 

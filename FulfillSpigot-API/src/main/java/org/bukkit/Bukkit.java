@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+import com.destroystokyo.paper.paper.profile.PlayerProfile;
 import org.bukkit.Warning.WarningState;
 import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandMap;
@@ -1185,7 +1186,7 @@ public final class Bukkit {
      * @param uuid UUID to create profile for
      * @return A PlayerProfile object
      */
-    public static com.destroystokyo.paper.profile.PlayerProfile createProfile(UUID uuid) {
+    public static PlayerProfile createProfile(UUID uuid) {
         return server.createProfile(uuid);
     }
 
@@ -1194,7 +1195,7 @@ public final class Bukkit {
      * @param name Name to create profile for
      * @return A PlayerProfile object
      */
-    public static com.destroystokyo.paper.profile.PlayerProfile createProfile(String name) {
+    public static PlayerProfile createProfile(String name) {
         return server.createProfile(name);
     }
 
@@ -1207,7 +1208,7 @@ public final class Bukkit {
      * @param name Name to create profile for
      * @return A PlayerProfile object
      */
-    public static com.destroystokyo.paper.profile.PlayerProfile createProfile(UUID uuid, String name) {
+    public static PlayerProfile createProfile(UUID uuid, String name) {
         return server.createProfile(uuid, name);
     }
     // PandaSpigot end

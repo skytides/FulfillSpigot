@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 // CraftBukkit start
+import com.destroystokyo.paper.paper.event.entity.ProjectileCollideEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Fish;
 import org.bukkit.event.player.PlayerFishEvent;
@@ -197,7 +198,7 @@ public class EntityFishingHook extends Entity {
 
             // PandaSpigot start - Call ProjectileCollideEvent
             if (movingobjectposition != null && movingobjectposition.entity != null) {
-                com.destroystokyo.paper.event.entity.ProjectileCollideEvent event = org.bukkit.craftbukkit.event.CraftEventFactory.callProjectileCollideEvent(this, movingobjectposition);
+                ProjectileCollideEvent event = org.bukkit.craftbukkit.event.CraftEventFactory.callProjectileCollideEvent(this, movingobjectposition);
                 if (event.isCancelled()) {
                     movingobjectposition = null;
                 }

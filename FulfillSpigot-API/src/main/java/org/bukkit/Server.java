@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+import com.destroystokyo.paper.paper.profile.PlayerProfile;
 import org.bukkit.Warning.WarningState;
 import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandMap;
@@ -956,14 +957,14 @@ public interface Server extends PluginMessageRecipient {
      * @param uuid UUID to create profile for
      * @return A PlayerProfile object
      */
-    com.destroystokyo.paper.profile.PlayerProfile createProfile(UUID uuid);
+    PlayerProfile createProfile(UUID uuid);
     
     /**
      * Creates a PlayerProfile for the specified name, with UUID as null
      * @param name Name to create profile for
      * @return A PlayerProfile object
      */
-    com.destroystokyo.paper.profile.PlayerProfile createProfile(String name);
+    PlayerProfile createProfile(String name);
     
     /**
      * Creates a PlayerProfile for the specified name/uuid
@@ -974,7 +975,7 @@ public interface Server extends PluginMessageRecipient {
      * @param name Name to create profile for
      * @return A PlayerProfile object
      */
-    com.destroystokyo.paper.profile.PlayerProfile createProfile(UUID uuid, String name);
+    PlayerProfile createProfile(UUID uuid, String name);
     // PandaSpigot end
 
     // PandaSpigot start

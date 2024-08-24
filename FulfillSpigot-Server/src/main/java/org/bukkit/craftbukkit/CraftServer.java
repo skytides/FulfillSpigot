@@ -23,6 +23,8 @@ import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
+import com.destroystokyo.paper.paper.profile.PlayerProfile;
+import com.destroystokyo.paper.profile.CraftPlayerProfile;
 import net.minecraft.server.*;
 
 import org.bukkit.BanList;
@@ -75,7 +77,6 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerChatTabCompleteEvent;
 import org.bukkit.event.world.WorldInitEvent;
 import org.bukkit.event.world.WorldLoadEvent;
-import org.bukkit.event.world.WorldSaveEvent;
 import org.bukkit.event.world.WorldUnloadEvent;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.help.HelpMap;
@@ -124,7 +125,6 @@ import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.base64.Base64;
 //import jline.console.ConsoleReader; // PandaSpigot - comment out
 import net.md_5.bungee.api.chat.BaseComponent;
-import xyz.zenithdev.spigot.FulfillSpigot;
 import xyz.zenithdev.spigot.config.FulfillSpigotConfig;
 
 
@@ -1816,22 +1816,22 @@ public final class CraftServer implements Server {
 
     // PandaSpigot start - PlayerProfile API
     @Override
-    public com.destroystokyo.paper.profile.PlayerProfile createProfile(UUID uuid) {
+    public PlayerProfile createProfile(UUID uuid) {
         return createProfile(uuid, null);
     }
 
     @Override
-    public com.destroystokyo.paper.profile.PlayerProfile createProfile(String name) {
+    public PlayerProfile createProfile(String name) {
         return createProfile(null, name);
     }
 
     @Override
-    public com.destroystokyo.paper.profile.PlayerProfile createProfile(UUID uuid, String name) {
+    public PlayerProfile createProfile(UUID uuid, String name) {
         Player player = uuid != null ? Bukkit.getPlayer(uuid) : (name != null ? Bukkit.getPlayerExact(name) : null);
         if (player != null) {
-            return new com.destroystokyo.paper.profile.CraftPlayerProfile((CraftPlayer)player);
+            return new CraftPlayerProfile((CraftPlayer)player);
         }
-        return new com.destroystokyo.paper.profile.CraftPlayerProfile(uuid, name);
+        return new CraftPlayerProfile(uuid, name);
     }
     // PandaSpigot end
 

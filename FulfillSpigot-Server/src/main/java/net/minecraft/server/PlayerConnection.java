@@ -1,11 +1,11 @@
 package net.minecraft.server;
 
+import com.destroystokyo.paper.paper.event.server.AsyncTabCompleteEvent;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
 import com.google.common.primitives.Doubles;
 import com.google.common.primitives.Floats;
 import io.netty.buffer.Unpooled;
-import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import java.io.IOException;
 import java.util.*;
@@ -2016,12 +2016,12 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
         }
 
         // CraftBukkit end
-        com.destroystokyo.paper.event.server.AsyncTabCompleteEvent event;
+        AsyncTabCompleteEvent event;
         java.util.List<String> completions = new ArrayList<>();
         BlockPosition blockpos = packetplayintabcomplete.b();
         String buffer = packetplayintabcomplete.a();
         boolean isCommand = buffer.startsWith("/");
-        event = new com.destroystokyo.paper.event.server.AsyncTabCompleteEvent(this.getPlayer(), completions,
+        event = new AsyncTabCompleteEvent(this.getPlayer(), completions,
             buffer, isCommand, blockpos != null ? new Location(player.world.getWorld(), blockpos.getX(), blockpos.getY(), blockpos.getZ()) : null);
         event.callEvent();
         completions = event.isCancelled() ? com.google.common.collect.ImmutableList.of() : event.getCompletions();
