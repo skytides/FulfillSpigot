@@ -113,7 +113,7 @@ tasks {
                 "Main-Class" to "org.bukkit.craftbukkit.Main",
                 "Implementation-Title" to "CraftBukkit",
                 "Implementation-Version" to "FulfillSpigot-1.8.9",
-                "Implementation-Vendor" to "ZenithDevelopment",
+                "Implementation-Vendor" to "Bukkit Team",
                 "Specification-Title" to "Bukkit",
                 "Specification-Version" to project.version,
                 "Specification-Vendor" to "Bukkit Team",
