@@ -52,6 +52,8 @@ FulfillSpigot includes patches from other spigots as well:
 
 - Note: The ServerConnection class is from another Spigot, though I can't remember its name. This class was given to me by someone who may own that Spigot, so credit goes to them.
 
+To get the FulfillSpigot patches, please check out the patches branch.
+
 Special thanks to Bukkit, Spigot and Paper!
 
 Please ensure **all credits** are properly given if you decide to use patches from FulfillSpigot in your own projects.
