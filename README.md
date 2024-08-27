@@ -36,7 +36,7 @@ To compile FulfillSpigot, you'll need:
 
 ## Team
 
-- **Steven**: Author of FulfillSpigot.
+- **Tavius**: Author of FulfillSpigot.
 - **Savrien**: Original creator of the knockback system and a valued member of our development team.
 - **Venyo**: Maintainer.
 
