@@ -12,20 +12,20 @@ Commands:
 - /ping
 
 Optimizations:
-- Velocity Packet Compression/Decompression and Encryption/Decryption: Efficiently handles packet data, reducing latency and improving server performance.
-- Stable 20 TPS with 500+ Bots in 3 Different Worlds: Maintains consistent server performance even under heavy load.
-- Modern Tick-Loop: Implements a modern tick loop for optimized server processing.
-- Asynchronous Entity Tracker: Tracks entities asynchronously to reduce server lag.
-- Chunk#getSnapshot Optimized: Improved chunk snapshot performance, now 2x faster.
-- Latest Netty and Log4J Versions: Uses the latest versions of Netty and Log4J for better performance and security.
-- Optimized Garbage Collection: Reduces memory overhead and minimizes server pauses.
-- Thread Pool Management: Efficiently manages thread pools to enhance server responsiveness.
-- Database Query Optimization: Speeds up database interactions, reducing latency.
-- Similar knockback mechanics to minemenclub: Replicates 60% of minemen clubs knockback.
-- Customizable pots throwing mechanics
-- PlayerHealthChangeEvent
-- ASYNC Chunk Loading & Generating
-- Countless NMS optimizations
+- Velocity packet compression and decompression, along with encryption and decryption, efficiently handles packet data, reducing latency and boosting server performance.
+- The server maintains stable 20 TPS even with over 500 bots across three different worlds.
+- A modern tick loop is implemented to optimize server processing.
+- Entity tracking is done asynchronously to minimize server lag.
+- Chunk snapshots are now processed twice as fast.
+- The latest versions of Netty and Log4J are used for better performance and security.
+- Garbage collection is optimized to reduce memory overhead and minimize server pauses.
+- Thread pools are managed efficiently to enhance server responsiveness.
+- Database queries are optimized to reduce latency (fully customizable).
+- The knockback mechanics are similar to those found in MinemenClub, replicating 60% of their functionality.
+- Potion throwing mechanics are customizable.
+- Player health changes are handled through the PlayerHealthChangeEvent.
+- Chunk loading and generation are done asynchronously.
+- Countless NMS optimizations.
 
 ## Building
 
