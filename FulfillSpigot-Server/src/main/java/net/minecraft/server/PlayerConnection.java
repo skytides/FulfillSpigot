@@ -2,13 +2,17 @@ package net.minecraft.server;
 
 import com.destroystokyo.paper.paper.event.server.AsyncTabCompleteEvent;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Queues;
 import com.google.common.primitives.Doubles;
 import com.google.common.primitives.Floats;
 import io.netty.buffer.Unpooled;
+import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -17,6 +21,7 @@ import org.apache.logging.log4j.Logger;
 // CraftBukkit start
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
+import java.util.HashSet;
 
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
@@ -58,7 +63,7 @@ import co.aikar.timings.SpigotTimings; // Spigot
 // CraftBukkit end
 
 import org.github.paperspigot.PaperSpigotConfig; // PaperSpigot
-import xyz.zenithdev.spigot.config.FulfillSpigotConfig;
+import xyz.tavenservices.spigot.config.FulfillSpigotConfig;
 
 public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerListBox {
 
@@ -82,10 +87,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     private long k;
     // CraftBukkit start - multithreaded fields
     private volatile int chatThrottle;
-    // FulfillSpigot - seperate chat and tab spam fields
-    private volatile int tabThrottle;
     private static final AtomicIntegerFieldUpdater chatSpamField = AtomicIntegerFieldUpdater.newUpdater(PlayerConnection.class, "chatThrottle");
-    private static final AtomicIntegerFieldUpdater tabSpamField = AtomicIntegerFieldUpdater.newUpdater(PlayerConnection.class, "tabThrottle");
     // CraftBukkit end
     private int m;
     private IntHashMap<Short> n = new IntHashMap();
@@ -94,8 +96,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     private double q;
     private boolean checkMovement = true;
     private boolean processedDisconnect; // CraftBukkit - added
-
-    private Queue<Packet<?>> queuedPackets = Queues.newLinkedBlockingQueue();
 
     public PlayerConnection(MinecraftServer minecraftserver, NetworkManager networkmanager, EntityPlayer entityplayer) {
         this.minecraftServer = minecraftserver;
@@ -145,9 +145,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
         this.minecraftServer.methodProfiler.b();
         // CraftBukkit start
         for (int spam; (spam = this.chatThrottle) > 0 && !chatSpamField.compareAndSet(this, spam, spam - 1); ) ;
-        // FulfillSpigot start - separate chat & tab throttle
-        for (int spam; (spam = this.tabThrottle) > 0 && !tabSpamField.compareAndSet(this, spam, spam - 1); ) ;
-        // FulfillSpigot end
         /* Use thread-safe field access instead
         if (this.chatThrottle > 0) {
             --this.chatThrottle;
@@ -189,8 +186,10 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
         // CraftBukkit end
         final ChatComponentText chatcomponenttext = new ChatComponentText(s);
 
-        this.networkManager.a(new PacketPlayOutKickDisconnect(chatcomponenttext), (GenericFutureListener) future -> { // CraftBukkit - fix decompile error
-            PlayerConnection.this.networkManager.close(chatcomponenttext);
+        this.networkManager.a(new PacketPlayOutKickDisconnect(chatcomponenttext), new GenericFutureListener() {
+            public void operationComplete(Future future) throws Exception { // CraftBukkit - fix decompile error
+                PlayerConnection.this.networkManager.close(chatcomponenttext);
+            }
         }, new GenericFutureListener[0]);
         this.a(chatcomponenttext); // CraftBukkit - fire quit instantly
         this.networkManager.k();
@@ -2002,19 +2001,10 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     public void a(PacketPlayInTabComplete packetplayintabcomplete) {
         // PandaSpigot start - Async Tab Completion
         // CraftBukkit start
-        // KigPaper - separate tab/chat spam
-        // if (chatSpamField.addAndGet(this, 10) > 500 && !this.minecraftServer.getPlayerList().isOp(this.player.getProfile())) {
-        if (tabSpamField.addAndGet(this, 10) > 500 && !this.minecraftServer.getPlayerList().isOp(this.player.getProfile())) {
-            // FulfillSpigot start - disable kick
-            if (FulfillSpigotConfig.get().kickTabCompleteSpam) {
-                this.disconnect("disconnect.spam");
-            } else {
-                tabSpamField.set(this, 500);
-            }
-            // FulfillSpigot end
+        if (chatSpamField.addAndGet(this, 10) > 500 && !this.minecraftServer.getPlayerList().isOp(this.player.getProfile())) {
+            minecraftServer.postToMainThread(() -> this.disconnect("disconnect.spam"));
             return;
         }
-
         // CraftBukkit end
         AsyncTabCompleteEvent event;
         java.util.List<String> completions = new ArrayList<>();
@@ -2324,21 +2314,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     public boolean isDisconnected() { // Spigot
         return !this.player.joining && !this.networkManager.channel.config().isAutoRead();
     }
-
-
-    public void queuePacket(Packet<?> packet) {
-        if (packet == null) return;
-        queuedPackets.add(packet);
-    }
-
-    public void sendQueuedPackets() {
-        networkManager.disableAutomaticFlush();
-        while (!queuedPackets.isEmpty()) {
-            sendPacket(queuedPackets.poll());
-        }
-        networkManager.enableAutomaticFlush();
-    }
-
 
     static class SyntheticClass_1 {
 

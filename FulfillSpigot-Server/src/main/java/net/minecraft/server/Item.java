@@ -4,7 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
-import xyz.zenithdev.spigot.util.FastRandom;
+import xyz.tavenservices.spigot.util.FastRandom;
 
 import java.util.Map;
 import java.util.Random;

@@ -1,6 +1,6 @@
 package net.minecraft.server;
 
-import xyz.zenithdev.spigot.config.FulfillSpigotConfig;
+import xyz.tavenservices.spigot.config.FulfillSpigotConfig;
 
 public class ItemWrittenBook extends Item {
 

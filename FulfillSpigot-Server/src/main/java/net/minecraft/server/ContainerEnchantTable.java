@@ -12,7 +12,7 @@ import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.entity.Player;
-import xyz.zenithdev.spigot.util.FastRandom;
+import xyz.tavenservices.spigot.util.FastRandom;
 // CraftBukkit end
 
 public class ContainerEnchantTable extends Container {

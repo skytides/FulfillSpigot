@@ -1,7 +1,7 @@
 package net.minecraft.server;
 
 import com.google.common.collect.Lists;
-import xyz.zenithdev.spigot.util.FastRandom;
+import xyz.tavenservices.spigot.util.FastRandom;
 
 import java.util.ArrayList;
 import java.util.Iterator;

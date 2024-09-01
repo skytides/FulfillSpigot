@@ -25,6 +25,7 @@ import javax.imageio.ImageIO;
 
 import com.destroystokyo.paper.paper.profile.PlayerProfile;
 import com.destroystokyo.paper.profile.CraftPlayerProfile;
+import jline.console.ConsoleReader;
 import net.minecraft.server.*;
 
 import org.bukkit.BanList;
@@ -125,7 +126,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.base64.Base64;
 //import jline.console.ConsoleReader; // PandaSpigot - comment out
 import net.md_5.bungee.api.chat.BaseComponent;
-import xyz.zenithdev.spigot.config.FulfillSpigotConfig;
+import xyz.tavenservices.spigot.config.FulfillSpigotConfig;
 
 
 public final class CraftServer implements Server {
@@ -317,6 +318,10 @@ public final class CraftServer implements Server {
     @Override
     public File getPluginsFolder() {
         return (File) this.console.options.valueOf("plugins");
+    }
+
+    public ConsoleReader getReader() {
+        return console.reader;
     }
 
     private List<File> extraPluginJars() {

@@ -3,7 +3,7 @@ package org.bukkit.craftbukkit;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import net.minecraft.server.MinecraftServer;
-import net.minecrell.terminalconsole.TerminalConsoleAppender;
+import org.fusesource.jansi.AnsiConsole;
 
 import java.io.File;
 import java.io.IOException;
@@ -199,7 +199,6 @@ public class Main {
             }
 
             try {
-                /* // PandaSpigot - Handled by TerminalConsoleAppender
                 // This trick bypasses Maven Shade's clever rewriting of our getProperty call when using String literals
                 String jline_UnsupportedTerminal = new String(new char[] {'j','l','i','n','e','.','U','n','s','u','p','p','o','r','t','e','d','T','e','r','m','i','n','a','l'});
                 String jline_terminal = new String(new char[] {'j','l','i','n','e','.','t','e','r','m','i','n','a','l'});
@@ -217,35 +216,26 @@ public class Main {
                     // This ensures the terminal literal will always match the jline implementation
                     System.setProperty(jline.TerminalFactory.JLINE_TERMINAL, jline.UnsupportedTerminal.class.getName());
                 }
-                */
 
-                // PandaSpigot start
-                if (options.has("nojline")) {
-                    System.setProperty(TerminalConsoleAppender.JLINE_OVERRIDE_PROPERTY, "false");
-                    useJline = false;
-                }
-                // PandaSpigot end
 
                 if (options.has("noconsole")) {
                     useConsole = false;
-                    // PandaSpigot start
-                    useJline = false;
-                    System.setProperty(TerminalConsoleAppender.JLINE_OVERRIDE_PROPERTY, "false");
-                    // PandaSpigot end
                 }
 
                 // Spigot Start
                 int maxPermGen = 0; // In kb
-                for (String s : java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments()) {
-                    if (s.startsWith("-XX:MaxPermSize")) {
-                        maxPermGen = Integer.parseInt(s.replaceAll("[^\\d]", ""));
-                        maxPermGen <<= 10 * ("kmg".indexOf(Character.toLowerCase(s.charAt(s.length() - 1))));
+                for ( String s : java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments() )
+                {
+                    if ( s.startsWith( "-XX:MaxPermSize" ) )
+                    {
+                        maxPermGen = Integer.parseInt( s.replaceAll( "[^\\d]", "" ) );
+                        maxPermGen <<= 10 * ("kmg".indexOf( Character.toLowerCase( s.charAt( s.length() - 1 ) ) ) );
                     }
                 }
-                if (Float.parseFloat(System.getProperty("java.class.version")) < 52 && maxPermGen < (128 << 10)) // 128mb
+                if ( Float.parseFloat( System.getProperty( "java.class.version" ) ) < 52 && maxPermGen < ( 128 << 10 ) ) // 128mb
                 {
-                    System.out.println("Warning, your max perm gen size is not set or less than 128mb. It is recommended you restart Java with the following argument: -XX:MaxPermSize=128M");
-                    System.out.println("Please see http://www.spigotmc.org/wiki/changing-permgen-size/ for more details and more in-depth instructions.");
+                    System.out.println( "Warning, your max perm gen size is not set or less than 128mb. It is recommended you restart Java with the following argument: -XX:MaxPermSize=128M" );
+                    System.out.println( "Please see http://www.spigotmc.org/wiki/changing-permgen-size/ for more details and more in-depth instructions." );
                 }
                 // Spigot End
                 System.setProperty("library.jansi.version", "PandaSpigot"); // PandaSpigot - set meaningless jansi version to prevent git builds from crashing on Windows

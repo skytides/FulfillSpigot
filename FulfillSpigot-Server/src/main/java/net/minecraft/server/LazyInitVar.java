@@ -1,21 +1,20 @@
 package net.minecraft.server;
 
-import java.util.function.Supplier;
+public abstract class LazyInitVar<T> {
 
-public class LazyInitVar<T> {
-    private T value;
-    private boolean cached = false;
-    private final Supplier<T> supplier;
+    private T a;
+    private boolean b = false;
 
-    public LazyInitVar(Supplier<T> supplier) {
-        this.supplier = supplier;
-    }
+    public LazyInitVar() {}
 
-    public T get() {
-        if (!this.cached) {
-            this.cached = true;
-            this.value = this.supplier.get();
+    public T c() {
+        if (!this.b) {
+            this.b = true;
+            this.a = this.init();
         }
-        return this.value;
+
+        return this.a;
     }
+
+    protected abstract T init();
 }

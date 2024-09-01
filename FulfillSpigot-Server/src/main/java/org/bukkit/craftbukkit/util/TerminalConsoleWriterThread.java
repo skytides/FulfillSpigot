@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-//import jline.console.ConsoleReader; // PandaSpigot - comment out
+import jline.console.ConsoleReader;
 import com.mojang.util.QueueLogAppender;
 import org.bukkit.craftbukkit.Main;
 
-public class TerminalConsoleWriterThread /*implements Runnable */{/* // PandaSpigot - disable
+public class TerminalConsoleWriterThread implements Runnable {
     final private ConsoleReader reader;
     final private OutputStream output;
 
@@ -49,4 +49,4 @@ public class TerminalConsoleWriterThread /*implements Runnable */{/* // PandaSpi
             }
         }
     }
-*/} // PandaSpigot
+}

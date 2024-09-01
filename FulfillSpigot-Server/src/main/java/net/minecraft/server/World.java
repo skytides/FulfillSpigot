@@ -22,15 +22,14 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import org.bukkit.util.Vector;
 import org.github.paperspigot.event.ServerExceptionEvent;
 import org.github.paperspigot.exception.ServerInternalException;
-import xyz.zenithdev.spigot.config.FulfillSpigotConfig;
-import xyz.zenithdev.spigot.config.FulfillSpigotWorldConfig;
-import xyz.zenithdev.spigot.event.sound.EntitySoundEvent;
-import xyz.zenithdev.spigot.event.sound.PlayerSoundEvent;
-import xyz.zenithdev.spigot.event.sound.SoundEvent;
-import xyz.zenithdev.spigot.util.FastRandom;
+import xyz.tavenservices.spigot.config.FulfillSpigotConfig;
+import xyz.tavenservices.spigot.config.FulfillSpigotWorldConfig;
+import xyz.tavenservices.spigot.event.sound.EntitySoundEvent;
+import xyz.tavenservices.spigot.event.sound.PlayerSoundEvent;
+import xyz.tavenservices.spigot.event.sound.SoundEvent;
+import xyz.tavenservices.spigot.util.FastRandom;
 // PaperSpigot end
 
 // CraftBukkit start
@@ -616,13 +615,8 @@ public abstract class World implements IBlockAccess {
 
     public void d(BlockPosition blockposition, final Block block) {
         if (!this.isClientSide) {
-            //IBlockData iblockdata = this.getType(blockposition);
-            // FulfillSpigot start
-            IBlockData iblockdata = this.getTypeIfLoaded(blockposition);
-            if (iblockdata == null) {
-                return;
-            }
-            // FulfillSpigot end
+            IBlockData iblockdata = this.getType(blockposition);
+
             try {
                 // CraftBukkit start
                 CraftWorld world = ((WorldServer) this).getWorld();

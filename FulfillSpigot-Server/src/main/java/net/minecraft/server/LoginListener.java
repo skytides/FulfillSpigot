@@ -1,7 +1,6 @@
 package net.minecraft.server;
 
 import com.destroystokyo.paper.paper.profile.PlayerProfile;
-import com.destroystokyo.paper.profile.CraftPlayerProfile;
 import com.google.common.base.Charsets;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.exceptions.AuthenticationUnavailableException;
@@ -23,8 +22,8 @@ import org.apache.logging.log4j.Logger;
 import org.bukkit.craftbukkit.util.Waitable;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerPreLoginEvent;
-import xyz.zenithdev.spigot.config.FulfillSpigotConfig;
-import xyz.zenithdev.spigot.util.FastRandom;
+import xyz.tavenservices.spigot.config.FulfillSpigotConfig;
+import xyz.tavenservices.spigot.util.FastRandom;
 // CraftBukkit end
 
 public class LoginListener implements PacketLoginInListener, IUpdatePlayerListBox {
@@ -44,14 +43,9 @@ public class LoginListener implements PacketLoginInListener, IUpdatePlayerListBo
     public String hostname = ""; // CraftBukkit - add field
     // PandaSpigot start - Cache threads
     private static final AtomicInteger threadId = new AtomicInteger(0);
-    private static final java.util.concurrent.ExecutorService authenticatorPool = java.util.concurrent.Executors
-        .newCachedThreadPool(r -> { // FulfillSpigot start - produced threads are daemon ones
-                Thread thread = new Thread(r, "User Authenticator #" + threadId.incrementAndGet());
-                thread.setDaemon(true);
-                return thread;
-            } // FulfillSpigot end
-        );
-    // Paper end
+    private static final java.util.concurrent.ExecutorService authenticatorPool = java.util.concurrent.Executors.newCachedThreadPool(
+            r -> new Thread(r, "User Authenticator #" + threadId.incrementAndGet())
+    );
     // PandaSpigot end
 
     public LoginListener(MinecraftServer minecraftserver, NetworkManager networkmanager) {
@@ -261,12 +255,12 @@ public class LoginListener implements PacketLoginInListener, IUpdatePlayerListBo
                             final org.bukkit.craftbukkit.CraftServer server = LoginListener.this.server.server;
 
                             // PandaSpigot start - Ability to change PlayerProfile in AsyncPreLoginEvent
-                            PlayerProfile profile = CraftPlayerProfile.asBukkitCopy(i);
+                            PlayerProfile profile = com.destroystokyo.paper.profile.CraftPlayerProfile.asBukkitCopy(i);
                             AsyncPlayerPreLoginEvent asyncEvent = new AsyncPlayerPreLoginEvent(playerName, address, uniqueId, profile);
                             server.getPluginManager().callEvent(asyncEvent);
                             profile = asyncEvent.getPlayerProfile();
                             profile.complete();
-                            i = CraftPlayerProfile.asAuthlib(profile);
+                            i = com.destroystokyo.paper.profile.CraftPlayerProfile.asAuthlib(profile);
                             playerName = i.getName();
                             uniqueId = i.getId();
                             // PandaSpigot end

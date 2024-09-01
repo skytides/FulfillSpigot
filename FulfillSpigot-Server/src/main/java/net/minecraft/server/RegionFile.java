@@ -3,7 +3,14 @@ package net.minecraft.server;
 import com.google.common.collect.Lists;
 import org.github.paperspigot.exception.ServerInternalException;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.List;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.GZIPInputStream;
@@ -61,7 +68,7 @@ public class RegionFile {
 
             // PandaSpigot start - Reduce IO ops
             java.nio.ByteBuffer header = java.nio.ByteBuffer.allocate(8192);
-            while (header.hasRemaining()) {
+            while (header.hasRemaining())  {
                 if (this.c.getChannel().read(header) == -1) throw new java.io.EOFException();
             }
             ((java.nio.Buffer) header).clear(); // cast required, due to Java 9+ changing return type
@@ -275,13 +282,6 @@ public class RegionFile {
         return this.e(i, j) != 0;
     }
 
-    public void c() throws IOException {
-        if (this.c != null) {
-            this.c.close();
-        }
-
-    }
-
     private void a(int i, int j, int k) throws IOException {
         this.d[i + j * 32] = k;
         this.c.seek((long) ((i + j * 32) * 4));
@@ -294,24 +294,25 @@ public class RegionFile {
         this.c.writeInt(k);
     }
 
-    public void close() throws IOException {
-        this.c.close();
+    public void c() throws IOException {
+        if (this.c != null) {
+            this.c.close();
+        }
+
     }
 
-    class ChunkBuffer extends ByteArrayOutputStream implements Closeable {
+    class ChunkBuffer extends ByteArrayOutputStream {
 
-        private final int b;
-        private final int c;
+        private int b;
+        private int c;
 
         public ChunkBuffer(int i, int j) {
-            super(8096); // Spigot - increase buffer size
+            super(8096);
             this.b = i;
             this.c = j;
         }
 
-        @Override
-        public void close() throws IOException {
-            super.close();
+        public void close() {
             RegionFile.this.a(this.b, this.c, this.buf, this.count);
         }
     }

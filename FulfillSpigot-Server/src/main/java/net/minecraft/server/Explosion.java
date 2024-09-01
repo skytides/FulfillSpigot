@@ -14,7 +14,7 @@ import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.Location;
 import org.bukkit.event.block.BlockExplodeEvent;
-import xyz.zenithdev.spigot.util.FastRandom;
+import xyz.tavenservices.spigot.util.FastRandom;
 // CraftBukkit end
 
 public class Explosion {

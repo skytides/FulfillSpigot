@@ -29,7 +29,6 @@ public class EntityTrackerEntry {
     public double k;
     public double l;
     public int m;
-    public int lastHeadYaw;
     private double q;
     private double r;
     private double s;
@@ -452,6 +451,7 @@ public class EntityTrackerEntry {
         for (int i = 0; i < list.size(); ++i) {
             this.updatePlayer((EntityPlayer) list.get(i));
         }
+
     }
 
     private Packet c() {

@@ -10,7 +10,7 @@ import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.inventory.meta.FireworkMeta;
-import xyz.zenithdev.spigot.util.FastRandom;
+import xyz.tavenservices.spigot.util.FastRandom;
 
 import java.util.Random;
 

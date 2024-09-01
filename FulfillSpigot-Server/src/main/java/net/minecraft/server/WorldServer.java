@@ -59,7 +59,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
     // FulfillSpigot end
 
     // CraftBukkit start
-    public int dimension; // FulfillSpigot
+    public final int dimension;
 
     // Add env and gen to constructor
     public WorldServer(MinecraftServer minecraftserver, IDataManager idatamanager, WorldData worlddata, int i, MethodProfiler methodprofiler, org.bukkit.World.Environment env, org.bukkit.generator.ChunkGenerator gen) {

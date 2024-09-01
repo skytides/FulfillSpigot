@@ -3,36 +3,18 @@ package net.minecraft.server;
 import java.io.IOException;
 
 public class PacketPlayInArmAnimation implements Packet<PacketListenerPlayIn> {
-    // FulfillSpigot start
-    private static long cachedTimestamp = -1;
-    private static long lastCacheUpdateTime = 0;
-    private static final long CACHE_UPDATE_INTERVAL = 50;
 
-    public long timestamp;
+    public long timestamp; // Spigot
 
-    public PacketPlayInArmAnimation() {
-    }
+    public PacketPlayInArmAnimation() {}
 
-    @Override
     public void a(PacketDataSerializer packetdataserializer) throws IOException {
-        long currentTime = System.currentTimeMillis();
-
-        if (currentTime - lastCacheUpdateTime >= CACHE_UPDATE_INTERVAL) {
-            cachedTimestamp = currentTime;
-            lastCacheUpdateTime = currentTime;
-        }
-
-        timestamp = cachedTimestamp;
+        timestamp = System.currentTimeMillis(); // Spigot
     }
 
-    @Override
-    public void b(PacketDataSerializer packetdataserializer) throws IOException {
-        // Empty as the packet does not require serialization in this direction
-    }
+    public void b(PacketDataSerializer packetdataserializer) throws IOException {}
 
-    @Override
     public void a(PacketListenerPlayIn packetlistenerplayin) {
-        packetlistenerplayin.a(this); //forward
+        packetlistenerplayin.a(this);
     }
-    // FulfillSpigot end
 }

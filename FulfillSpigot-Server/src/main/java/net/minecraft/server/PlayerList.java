@@ -37,8 +37,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.util.Vector;
 import org.spigotmc.event.player.PlayerSpawnLocationEvent;
-import xyz.zenithdev.spigot.config.FulfillSpigotConfig;
-import xyz.zenithdev.spigot.console.FulfillConsoleCommandSender;
+import xyz.tavenservices.spigot.config.FulfillSpigotConfig;
 
 // CraftBukkit end
 
@@ -72,7 +71,9 @@ public abstract class PlayerList {
 
     public PlayerList(MinecraftServer minecraftserver) {
         this.cserver = minecraftserver.server = new CraftServer(minecraftserver, this);
-        minecraftserver.console = new FulfillConsoleCommandSender();
+        minecraftserver.console = org.bukkit.craftbukkit.command.ColouredConsoleSender.getInstance();
+        minecraftserver.reader
+                .addCompleter(new org.bukkit.craftbukkit.command.ConsoleCommandCompleter(minecraftserver.server));
         // CraftBukkit end
 
         this.k = new GameProfileBanList(PlayerList.a);

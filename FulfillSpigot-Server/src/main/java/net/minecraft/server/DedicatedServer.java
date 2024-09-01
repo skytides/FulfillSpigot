@@ -13,6 +13,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import jline.console.ConsoleReader;
 
 // CraftBukkit start
 import java.io.PrintStream;
@@ -23,11 +24,9 @@ import co.aikar.timings.SpigotTimings; // Spigot
 import org.bukkit.event.server.ServerCommandEvent;
 import org.bukkit.craftbukkit.util.Waitable;
 import org.bukkit.event.server.RemoteServerCommandEvent;
-import xyz.zenithdev.spigot.FulfillSpigot;
-import xyz.zenithdev.spigot.config.FulfillSpigotConfig;
-import xyz.zenithdev.spigot.config.KnockbackConfig;
-import xyz.zenithdev.spigot.console.FulfillConsole;
-import xyz.zenithdev.spigot.database.DatabaseConfig;
+import xyz.tavenservices.spigot.FulfillSpigot;
+import xyz.tavenservices.spigot.config.FulfillSpigotConfig;
+import xyz.tavenservices.spigot.config.KnockbackConfig;
 // CraftBukkit end
 
 public class DedicatedServer extends MinecraftServer implements IMinecraftServer {
@@ -77,10 +76,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                 }
                 // CraftBukkit end
 
-                // PandaSpigot start - Use TerminalConsoleAppender
-                new FulfillConsole(DedicatedServer.this).start();
-                /*
-                // PandaSpigot end
                 jline.console.ConsoleReader bufferedreader = reader; // CraftBukkit
                 String s;
 
@@ -100,7 +95,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                 } catch (IOException ioexception) {
                     DedicatedServer.LOGGER.error("Exception handling console input", ioexception);
                 }
-                */ // PandaSpigot
 
             }
         };
@@ -113,10 +107,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
         }
         global.addHandler(new org.bukkit.craftbukkit.util.ForwardLogHandler());
 
-        // PandaSpigot start - Not needed with TerminalConsoleAppender
-        final org.apache.logging.log4j.Logger logger = LogManager.getRootLogger();
-        /*
-        // PandaSpigot end
         final org.apache.logging.log4j.core.Logger logger = ((org.apache.logging.log4j.core.Logger) LogManager.getRootLogger());
         for (org.apache.logging.log4j.core.Appender appender : logger.getAppenders().values()) {
             if (appender instanceof org.apache.logging.log4j.core.appender.ConsoleAppender) {
@@ -125,7 +115,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
         }
 
         new Thread(new org.bukkit.craftbukkit.util.TerminalConsoleWriterThread(System.out, this.reader)).start();
-        */
 
         System.setOut(new PrintStream(new LoggerOutputStream(logger, Level.INFO), true));
         System.setErr(new PrintStream(new LoggerOutputStream(logger, Level.WARN), true));
@@ -181,7 +170,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
 
             this.r = WorldSettings.a(i);
             DedicatedServer.LOGGER.info("Default game type: " + this.r);
-            InetAddress inetaddress = null;
 
             // PandaSpigot start - Unix domain socket support
             // PandaSpigot - Move SpigotConfig to load earlier, so that we can check IP forwarding status here.
@@ -203,7 +191,8 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                 }
                 bindAddress = new io.netty.channel.unix.DomainSocketAddress(this.getServerIp().substring("unix:".length()));
             } else {
-                // FulfillSpigot end
+                // PandaSpigot end
+                InetAddress inetaddress = null;
 
                 if (this.getServerIp().length() > 0) {
                     inetaddress = InetAddress.getByName(this.getServerIp());
@@ -215,13 +204,12 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                 bindAddress = new java.net.InetSocketAddress(inetaddress, this.R());
             }
             FulfillSpigotConfig.init((File) options.valueOf("fulfillspigot-settings"));
-            DatabaseConfig.init((File) options.valueOf("database-settings"));
             KnockbackConfig.init((File) options.valueOf("knockback-settings"));
-            // FulfillSpigot end
-            // FulfillSpigot start
+            // PandaSpigot end
+            // PaperSpigot start
             org.github.paperspigot.PaperSpigotConfig.init((File) options.valueOf("paper-settings"));
             org.github.paperspigot.PaperSpigotConfig.registerCommands();
-            // FulfillSpigot end
+            // PaperSpigot end
 
             DedicatedServer.LOGGER.info("Generating keypair");
             this.a(MinecraftEncryption.b());
@@ -229,7 +217,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
 
             if (!org.spigotmc.SpigotConfig.lateBind) {
                 try {
-                    this.aq().a(inetaddress, this.R()); // PandaSpigot - Unix domain socket support
+                    this.aq().bind(bindAddress); // PandaSpigot - Unix domain socket support
                 } catch (IOException ioexception) {
                     DedicatedServer.LOGGER.warn("**** FAILED TO BIND TO PORT!");
                     DedicatedServer.LOGGER.warn("The exception was: {}", new Object[] { ioexception.toString()});
@@ -335,7 +323,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
 
                 if (org.spigotmc.SpigotConfig.lateBind) {
                     try {
-                        this.aq().a(inetaddress, this.R()); // PandaSpigot - Unix domain socket support
+                        this.aq().bind(bindAddress); // PandaSpigot - Unix domain socket support
                     } catch (IOException ioexception) {
                         DedicatedServer.LOGGER.warn("**** FAILED TO BIND TO PORT!");
                         DedicatedServer.LOGGER.warn("The exception was: {}", new Object[] { ioexception.toString()});
@@ -469,16 +457,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
 
     public boolean ai() {
         return this.propertyManager.getBoolean("use-native-transport", true);
-    }
-
-    @Override
-    public ServerConnection.EventGroupType getTransport() {
-        try {
-            return ServerConnection.EventGroupType
-                .valueOf(this.propertyManager.getString("transport-to-use", "default").toUpperCase());
-        } catch (Exception ignored) {
-            return ServerConnection.EventGroupType.DEFAULT;
-        }
     }
 
     public DedicatedPlayerList aP() {

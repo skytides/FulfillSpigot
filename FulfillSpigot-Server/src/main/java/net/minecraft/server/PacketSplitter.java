@@ -5,7 +5,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.handler.codec.CorruptedFrameException;
-import xyz.zenithdev.spigot.network.VarIntByteDecoder;
+import xyz.tavenservices.spigot.network.VarIntByteDecoder;
 
 import java.util.List;
 

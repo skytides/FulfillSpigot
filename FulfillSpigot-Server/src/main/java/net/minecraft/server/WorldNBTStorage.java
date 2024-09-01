@@ -12,7 +12,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 // CraftBukkit start
-import java.nio.file.Files;
 import java.util.UUID;
 
 import org.bukkit.craftbukkit.entity.CraftPlayer;
@@ -220,9 +219,9 @@ public class WorldNBTStorage implements IDataManager, IPlayerFileData {
                 }
             }
             // Spigot End
-            // FulfillSpigot - Improve file check logic
+
             if (file.exists() && file.isFile()) {
-                nbttagcompound = NBTCompressedStreamTools.a(Files.newInputStream(file.toPath()));
+                nbttagcompound = NBTCompressedStreamTools.a((InputStream) (new FileInputStream(file)));
             }
             // Spigot Start
             if ( usingWrongFile )

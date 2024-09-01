@@ -68,7 +68,7 @@ import org.bukkit.plugin.messaging.StandardMessenger;
 import org.bukkit.scoreboard.Scoreboard;
 // PaperSpigot start
 import org.github.paperspigot.Title;
-import xyz.zenithdev.spigot.event.PlayerHealthChangeEvent;
+import xyz.tavenservices.spigot.event.PlayerHealthChangeEvent;
 // PaperSpigot end
 
 @DelegateDeserialization(CraftOfflinePlayer.class)

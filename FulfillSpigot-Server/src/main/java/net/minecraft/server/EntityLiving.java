@@ -15,11 +15,9 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageModifier;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.spigotmc.event.entity.EntityDismountEvent;
-import xyz.zenithdev.spigot.FulfillSpigot;
-import xyz.zenithdev.spigot.config.FulfillSpigotConfig;
-import xyz.zenithdev.spigot.config.KnockbackConfig;
-import xyz.zenithdev.spigot.event.sound.KnockbackProfile;
-import xyz.zenithdev.spigot.knockback.CraftKnockbackProfile;
+import xyz.tavenservices.spigot.config.FulfillSpigotConfig;
+import xyz.tavenservices.spigot.config.KnockbackConfig;
+import xyz.tavenservices.spigot.knockback.CraftKnockbackProfile;
 
 import java.util.*;
 // PaperSpigot end
@@ -933,8 +931,8 @@ public abstract class EntityLiving extends Entity {
 
             CraftKnockbackProfile kb = (CraftKnockbackProfile)
                 ((this.getKnockbackProfile() == null) ?
-                KnockbackConfig.getCurrentKb() :
-                this.getKnockbackProfile());
+                    KnockbackConfig.getCurrentKb() :
+                    this.getKnockbackProfile());
 
             double distance = this.distance(opponent, this);
             double rangeReduction = this.calculateModifiedRange(kb, distance);
@@ -942,7 +940,7 @@ public abstract class EntityLiving extends Entity {
             double knockbackHorizontal = kb.getHorizontal();
             double knockbackVertical = kb.getVertical();
 
-            double frictionHorizontal = kb.getFriction() - (1.0 - knockbackHorizontal);
+            double frictionHorizontal = 2.0 - (1.0 - knockbackHorizontal);
 
             float f1 = MathHelper.sqrt(x * x + z * z);
 
@@ -964,24 +962,6 @@ public abstract class EntityLiving extends Entity {
     }
 
     // FulfillSpigot KB end
-
-            /*
-            FulfillSpigotWorldConfig.KnockbackConfig knockbackConfig = entity.world.pandaSpigotConfig.knockback;
-            double magnitude = MathHelper.sqrt(d0 * d0 + d1 * d1);
-
-            double friction = knockbackConfig.friction;
-            this.motX /= friction;
-            this.motY /= friction;
-            this.motZ /= friction;
-
-            this.motX -= d0 / magnitude * knockbackConfig.horizontal;
-            this.motY += knockbackConfig.vertical;
-            this.motZ -= d1 / magnitude * knockbackConfig.horizontal;
-
-            if (this.motY > knockbackConfig.verticalLimit) {
-                this.motY = knockbackConfig.verticalLimit;
-            }
-            */
 
     protected String bo() {
         return "game.neutral.hurt";

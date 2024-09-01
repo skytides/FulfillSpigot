@@ -3,229 +3,220 @@ package net.minecraft.server;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.buffer.ByteBufAllocator;
-import io.netty.channel.*;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelException;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.EventLoopGroup;
 import io.netty.channel.epoll.Epoll;
 import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.epoll.EpollServerSocketChannel;
-import io.netty.channel.kqueue.KQueue;
-import io.netty.channel.kqueue.KQueueEventLoopGroup;
-import io.netty.channel.kqueue.KQueueServerSocketChannel;
+import io.netty.channel.local.LocalEventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.timeout.ReadTimeoutHandler;
+import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
-import io.papermc.paper.network.ChannelInitializeListenerHolder;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.spigotmc.SpigotConfig;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Queue;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import xyz.tavenservices.spigot.config.FulfillSpigotConfig;
 
 public class ServerConnection {
-    private static final Logger LOGGER = LogManager.getLogger();
-    private static final WriteBufferWaterMark SERVER_WRITE_MARK = new WriteBufferWaterMark(0x100000, 0x200000);
-    private final EventGroupType eventGroupType;
-    public static LazyInitVar<EventLoopGroup> a;
-    public static LazyInitVar<EventLoopGroup> b;
-    public static final LazyInitVar<DefaultEventLoopGroup> c;
-    private final MinecraftServer server;
-    public volatile boolean started;
-    private final List<ChannelFuture> g = Collections.synchronizedList(Lists.newArrayList());
-    private final List<NetworkManager> h = Collections.synchronizedList(Lists.newArrayList());
-    public final Queue<NetworkManager> pending = new ConcurrentLinkedQueue<>();
 
-    public ServerConnection(MinecraftServer minecraftserver) {
-        this.server = minecraftserver;
-        this.started = true;
-        if (this.server.ai()) {
-            if (Epoll.isAvailable()) {
-                this.eventGroupType = EventGroupType.EPOLL;
-                return;
-            }
-            if (KQueue.isAvailable()) {
-                this.eventGroupType = EventGroupType.KQUEUE;
-                return;
-            }
+    private static final Logger e = LogManager.getLogger();
+    public static final LazyInitVar<NioEventLoopGroup> a = new LazyInitVar() {
+        protected NioEventLoopGroup a() {
+            return new NioEventLoopGroup(0, (new ThreadFactoryBuilder()).setNameFormat("Netty Server IO #%d").setDaemon(true).build());
         }
-        this.eventGroupType = this.server.getTransport();
-    }
 
+        protected Object init() {
+            return this.a();
+        }
+    };
+    public static final LazyInitVar<EpollEventLoopGroup> b = new LazyInitVar() {
+        protected EpollEventLoopGroup a() {
+            return new EpollEventLoopGroup(0, (new ThreadFactoryBuilder()).setNameFormat("Netty Epoll Server IO #%d").setDaemon(true).build());
+        }
+
+        protected Object init() {
+            return this.a();
+        }
+    };
+    public static final LazyInitVar<LocalEventLoopGroup> c = new LazyInitVar() {
+        protected LocalEventLoopGroup a() {
+            return new LocalEventLoopGroup(0, (new ThreadFactoryBuilder()).setNameFormat("Netty Local Server IO #%d").setDaemon(true).build());
+        }
+
+        protected Object init() {
+            return this.a();
+        }
+    };
+    private final MinecraftServer f;
+    public volatile boolean d;
+    private final List<ChannelFuture> g = Collections.synchronizedList(Lists.<ChannelFuture>newArrayList());
+    private final List<NetworkManager> h = Collections.synchronizedList(Lists.<NetworkManager>newArrayList());
+    private static final boolean disableFlushConsolidation = Boolean.getBoolean("Paper.disableFlushConsolidate"); // PandaSpigot
+
+    // PandaSpigot start - prevent blocking on adding a new network manager while the server is ticking
+    private final java.util.Queue<NetworkManager> pending = new java.util.concurrent.ConcurrentLinkedQueue<>();
     private void addPending() {
         NetworkManager manager;
-        while ((manager = this.pending.poll()) != null) {
-            this.getConnectedChannels().add(manager);
+        while ((manager = pending.poll()) != null) {
+            manager.isPending = false;
+            this.h.add(manager);
         }
     }
+    // PandaSpigot end
+    public ServerConnection(MinecraftServer minecraftserver) {
+        this.f = minecraftserver;
+        this.d = true;
+    }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    public void a(InetAddress ip, int port) throws IOException {
-        List<ChannelFuture> list = this.getListeningChannels();
-        synchronized (list) {
-            Class channel = null;
-            int workerThreadCount = Runtime.getRuntime().availableProcessors();
-            switch (this.eventGroupType) {
-                default: {
-                    LOGGER.info("Finding best event group type using fall-through");
+    // PandaSpigot start
+    public void a(InetAddress inetaddress, int i) throws IOException {
+        bind(new java.net.InetSocketAddress(inetaddress, i));
+    }
+    public void bind(java.net.SocketAddress address) throws IOException {
+        // PandaSpigot end
+        List list = this.g;
+
+        synchronized (this.g) {
+            Class oclass;
+            LazyInitVar lazyinitvar;
+
+            if (Epoll.isAvailable() && this.f.ai()) {
+                // PandaSpigot start - Unix domain socket support
+                if (address instanceof io.netty.channel.unix.DomainSocketAddress) {
+                    oclass = io.netty.channel.epoll.EpollServerDomainSocketChannel.class;
+                } else {
+                    oclass = EpollServerSocketChannel.class;
                 }
-                case EPOLL: {
-                    if (Epoll.isAvailable()) {
-                        a = new LazyInitVar<>(() -> new EpollEventLoopGroup(2));
-                        b = new LazyInitVar<>(() -> new EpollEventLoopGroup(workerThreadCount));
-                        channel = EpollServerSocketChannel.class;
-                        LOGGER.info("Using epoll");
-                        break;
-                    }
-                }
-                case KQUEUE: {
-                    if (KQueue.isAvailable()) {
-                        a = new LazyInitVar<>(() -> new KQueueEventLoopGroup(2));
-                        b = new LazyInitVar<>(() -> new KQueueEventLoopGroup(workerThreadCount));
-                        channel = KQueueServerSocketChannel.class;
-                        LOGGER.info("Using kqueue");
-                        break;
-                    }
-                }
-                case NIO: {
-                    a = new LazyInitVar<>(() -> new NioEventLoopGroup(2));
-                    b = new LazyInitVar<>(() -> new NioEventLoopGroup(workerThreadCount));
-                    channel = NioServerSocketChannel.class;
-                    LOGGER.info("Using NIO");
-                }
+                // PandaSpigot end
+                lazyinitvar = ServerConnection.b;
+                ServerConnection.e.info("Using epoll channel type");
+            } else {
+                oclass = NioServerSocketChannel.class;
+                lazyinitvar = ServerConnection.a;
+                ServerConnection.e.info("Using default channel type");
             }
-            this.g.add(((ServerBootstrap) ((ServerBootstrap) new ServerBootstrap().channel(channel)).childOption(ChannelOption.WRITE_BUFFER_WATER_MARK, SERVER_WRITE_MARK).childHandler(new ChannelInitializer() {
 
-                @Override
+            this.g.add(((ServerBootstrap) ((ServerBootstrap) (new ServerBootstrap()).channel(oclass)).childHandler(new ChannelInitializer() {
                 protected void initChannel(Channel channel) throws Exception {
                     try {
-                        ChannelConfig config = channel.config();
-                        config.setOption(ChannelOption.TCP_NODELAY, true);
-                        config.setOption(ChannelOption.TCP_FASTOPEN, 1);
-                        config.setOption(ChannelOption.TCP_FASTOPEN_CONNECT, true);
-                        config.setOption(ChannelOption.IP_TOS, 24);
-                        config.setAllocator(ByteBufAllocator.DEFAULT);
-                    } catch (ChannelException e) {
-                        e.printStackTrace();
+                        channel.config().setOption(ChannelOption.TCP_NODELAY, Boolean.valueOf(true));
+                    } catch (ChannelException channelexception) {
+                        ;
                     }
-                    channel.pipeline().addLast("timeout", (ChannelHandler) new ReadTimeoutHandler(30)).addLast("legacy_query", (ChannelHandler) new LegacyPingHandler(ServerConnection.this)).addLast("splitter", (ChannelHandler) new PacketSplitter()).addLast("decoder", (ChannelHandler) new PacketDecoder(EnumProtocolDirection.SERVERBOUND)).addLast("prepender", (ChannelHandler) PacketPrepender.INSTANCE).addLast("encoder", (ChannelHandler) new PacketEncoder(EnumProtocolDirection.CLIENTBOUND));
-                    NetworkManager networkmanager = new NetworkManager(EnumProtocolDirection.SERVERBOUND);
-                    ServerConnection.this.h.add(networkmanager);
-                    channel.pipeline().addLast("packet_handler", (ChannelHandler) networkmanager);
-                    networkmanager.a(new HandshakeListener(ServerConnection.this.server, networkmanager));
-                    ChannelInitializeListenerHolder.callListeners(channel);
-                }
-            }).group(a.get(), b.get()).localAddress(ip, port)).bind().syncUninterruptibly());
-        }
-    }
 
-    public void stopServer() throws InterruptedException {
-        this.started = false;
-        LOGGER.info("Shutting down event loops");
-        for (ChannelFuture channelfuture : this.g) {
-            try {
-                channelfuture.channel().close().sync();
-            } finally {
-                a.get().shutdownGracefully();
-                b.get().shutdownGracefully();
-                c.get().shutdownGracefully();
-            }
+                    if (!disableFlushConsolidation) channel.pipeline().addFirst(new io.netty.handler.flush.FlushConsolidationHandler()); // PandaSpigot
+                    // PandaSpigot start - newlines
+                    channel.pipeline().addLast("timeout", new ReadTimeoutHandler(30))
+                        .addLast("legacy_query", new LegacyPingHandler(ServerConnection.this))
+                        .addLast("splitter", new PacketSplitter())
+                        .addLast("decoder", new PacketDecoder(EnumProtocolDirection.SERVERBOUND))
+                        .addLast("prepender", PacketPrepender.INSTANCE) // PandaSpigot - Share PacketPrepender instance
+                        .addLast("encoder", new PacketEncoder(EnumProtocolDirection.CLIENTBOUND));
+                    // PandaSpigot end
+                    NetworkManager networkmanager = new NetworkManager(EnumProtocolDirection.SERVERBOUND);
+
+                    // PandaSpigot start - prevent blocking on adding a new network manager while the server is ticking
+                    //ServerConnection.this.h.add(networkmanager);
+                    ServerConnection.this.pending.add(networkmanager);
+                    // PandaSpigot end
+                    channel.pipeline().addLast("packet_handler", networkmanager);
+                    networkmanager.a((PacketListener) (new HandshakeListener(ServerConnection.this.f, networkmanager)));
+                    io.papermc.paper.network.ChannelInitializeListenerHolder.callListeners(channel); // PandaSpigot - Add Channel initialization listeners
+                }
+            }).group((EventLoopGroup) lazyinitvar.c()).localAddress(address)).bind().syncUninterruptibly()); // PandaSpigot - Unix domain socket support
         }
     }
 
     public void b() {
-        try {
-            this.stopServer();
-        } catch (InterruptedException e) {
-            LOGGER.info("Error occurred while flushing and closing netty channels!");
+        this.d = false;
+        Iterator iterator = this.g.iterator();
+
+        while (iterator.hasNext()) {
+            ChannelFuture channelfuture = (ChannelFuture) iterator.next();
+
+            try {
+                channelfuture.channel().close().sync();
+            } catch (InterruptedException interruptedexception) {
+                ServerConnection.e.error("Interrupted whilst closing channel");
+            }
         }
+
     }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
     public void c() {
-        List<NetworkManager> list = this.h;
-        synchronized (list) {
-            this.addPending();
-            if (SpigotConfig.playerShuffle > 0 && MinecraftServer.currentTick % SpigotConfig.playerShuffle == 0) {
-                Collections.shuffle(this.h);
+        List list = this.h;
+
+        synchronized (this.h) {
+            this.addPending(); // PandaSpigot
+            // Spigot Start
+            // This prevents players from 'gaming' the server, and strategically relogging to increase their position in the tick order
+            if ( org.spigotmc.SpigotConfig.playerShuffle > 0 && MinecraftServer.currentTick % org.spigotmc.SpigotConfig.playerShuffle == 0 )
+            {
+                Collections.shuffle( this.h );
             }
-            Iterator<NetworkManager> iterator = this.h.iterator();
+            // Spigot End
+            Iterator iterator = this.h.iterator();
+
             while (iterator.hasNext()) {
-                final NetworkManager networkmanager = iterator.next();
-                if (networkmanager.h()) continue;
-                if (!networkmanager.g()) {
-                    if (networkmanager.preparing) continue;
-                    iterator.remove();
-                    networkmanager.l();
-                    continue;
-                }
-                try {
-                    networkmanager.a();
-                } catch (Exception exception) {
-                    if (networkmanager.c()) {
-                        CrashReport crashreport = CrashReport.a(exception, "Ticking memory connection");
-                        CrashReportSystemDetails crashreportsystemdetails = crashreport.a("Ticking connection");
-                        crashreportsystemdetails.a("Connection", new Callable() {
+                final NetworkManager networkmanager = (NetworkManager) iterator.next();
 
-                            public String a() throws Exception {
-                                return networkmanager.toString();
+                if (!networkmanager.h()) {
+                    if (!networkmanager.g()) {
+                        // Spigot Start
+                        // Fix a race condition where a NetworkManager could be unregistered just before connection.
+                        if (networkmanager.preparing) continue;
+                        // Spigot End
+                        iterator.remove();
+                        networkmanager.l();
+                    } else {
+                        try {
+                            networkmanager.a();
+                        } catch (Exception exception) {
+                            if (networkmanager.c()) {
+                                CrashReport crashreport = CrashReport.a(exception, "Ticking memory connection");
+                                CrashReportSystemDetails crashreportsystemdetails = crashreport.a("Ticking connection");
+
+                                crashreportsystemdetails.a("Connection", new Callable() {
+                                    public String a() throws Exception {
+                                        return networkmanager.toString();
+                                    }
+
+                                    public Object call() throws Exception {
+                                        return this.a();
+                                    }
+                                });
+                                throw new ReportedException(crashreport);
                             }
 
-                            @Override
-                            public Object call() throws Exception {
-                                return this.a();
-                            }
-                        });
-                        throw new ReportedException(crashreport);
+                            ServerConnection.e.warn("Failed to handle packet for " + (FulfillSpigotConfig.get().logPlayerIpAddresses ? networkmanager.getSocketAddress() : "<ip address withheld>"), exception); // PandaSpigot
+                            final ChatComponentText chatcomponenttext = new ChatComponentText("Internal server error");
+
+                            networkmanager.a(new PacketPlayOutKickDisconnect(chatcomponenttext), new GenericFutureListener() {
+                                public void operationComplete(Future future) throws Exception {
+                                    networkmanager.close(chatcomponenttext);
+                                }
+                            }, new GenericFutureListener[0]);
+                            networkmanager.k();
+                        }
                     }
-                    LOGGER.warn("Failed to handle packet for " + networkmanager.getSocketAddress(), (Throwable) exception);
-                    ChatComponentText chatcomponenttext = new ChatComponentText("Internal server error");
-                    networkmanager.handleConnectionPacket(new PacketPlayOutKickDisconnect(chatcomponenttext), future -> networkmanager.close(chatcomponenttext), new GenericFutureListener[0]);
-                    networkmanager.k();
                 }
             }
+
         }
     }
 
     public MinecraftServer d() {
-        return this.server;
-    }
-
-    public List<ChannelFuture> getListeningChannels() {
-        return this.g;
-    }
-
-    public List<NetworkManager> getConnectedChannels() {
-        return this.h;
-    }
-
-    public List<NetworkManager> getNetworkManagers() {
-        return this.h;
-    }
-
-    public List<ChannelFuture> getListeners() {
-        return this.g;
-    }
-
-    static {
-        c = new LazyInitVar<>(() -> new DefaultEventLoopGroup(0, new ThreadFactoryBuilder().setNameFormat("Netty Local Server IO #%d").setDaemon(true).build()));
-    }
-
-    public static enum EventGroupType {
-        EPOLL,
-        KQUEUE,
-        NIO,
-        DEFAULT
-
+        return this.f;
     }
 }

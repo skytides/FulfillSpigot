@@ -61,7 +61,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
-import xyz.zenithdev.spigot.event.sound.KnockbackProfile;
+import xyz.tavenservices.spigot.event.sound.KnockbackProfile;
 
 public class CraftLivingEntity extends CraftEntity implements LivingEntity {
     private CraftEntityEquipment equipment;
@@ -519,8 +519,8 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
     }
 
     @Override
-    public xyz.zenithdev.spigot.event.sound.KnockbackProfile getKnockbackProfile() {
-        return (xyz.zenithdev.spigot.event.sound.KnockbackProfile) getHandle().getKnockbackProfile();
+    public KnockbackProfile getKnockbackProfile() {
+        return (KnockbackProfile) getHandle().getKnockbackProfile();
     }
 
 

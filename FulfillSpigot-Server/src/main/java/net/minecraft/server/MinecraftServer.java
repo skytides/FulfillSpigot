@@ -27,6 +27,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import javax.imageio.ImageIO;
+
+import jline.console.ConsoleReader;
 import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,10 +39,11 @@ import org.apache.logging.log4j.Logger;
 import joptsimple.OptionSet;
 
 import co.aikar.timings.SpigotTimings; // Spigot
-import xyz.zenithdev.spigot.tickloop.ReentrantIAsyncHandler;
-import xyz.zenithdev.spigot.tickloop.TasksPerTick;
-import xyz.zenithdev.spigot.util.FastRandom;
-import xyz.zenithdev.spigot.world.AutoSaveJob;
+import org.bukkit.craftbukkit.Main;
+import xyz.tavenservices.spigot.tickloop.ReentrantIAsyncHandler;
+import xyz.tavenservices.spigot.tickloop.TasksPerTick;
+import xyz.tavenservices.spigot.util.FastRandom;
+import xyz.tavenservices.spigot.world.AutoSaveJob;
 // CraftBukkit end
 
 public abstract class MinecraftServer extends ReentrantIAsyncHandler<TasksPerTick> implements ICommandListener, IAsyncTaskHandler, IMojangStatistics { // PandaSpigot - Modern tick loop
@@ -107,6 +110,7 @@ public abstract class MinecraftServer extends ReentrantIAsyncHandler<TasksPerTic
     public org.bukkit.command.RemoteConsoleCommandSender remoteConsole;
     //public ConsoleReader reader; // PandaSpigot - comment out
     public static int currentTick = 0; // PaperSpigot - Further improve tick loop
+    public ConsoleReader reader;
     public final Thread primaryThread;
     public java.util.Queue<Runnable> processQueue = new java.util.concurrent.ConcurrentLinkedQueue<Runnable>();
     public int autosavePeriod;
@@ -154,7 +158,7 @@ public abstract class MinecraftServer extends ReentrantIAsyncHandler<TasksPerTic
     }
     // FulfillSpigot end
 
-    // FulfillSpigot start
+    // FloretSpigot start
     private double lastMspt;
     // end
 
@@ -202,7 +206,6 @@ public abstract class MinecraftServer extends ReentrantIAsyncHandler<TasksPerTic
         this.Y = this.V.createProfileRepository();
         // CraftBukkit start
         this.options = options;
-        /* // PandaSpigot - Handled by TerminalConsoleAppender
         // Try to see if we're actually running in a terminal, disable jline if not
         if (System.console() == null && System.getProperty("jline.terminal") == null) {
             System.setProperty("jline.terminal", "jline.UnsupportedTerminal");
@@ -224,7 +227,7 @@ public abstract class MinecraftServer extends ReentrantIAsyncHandler<TasksPerTic
                 LOGGER.warn((String) null, ex);
             }
         }
-        */ // PandaSpigot
+
         Runtime.getRuntime().addShutdownHook(new org.bukkit.craftbukkit.util.ServerShutdownThread(this));
 
         //this.serverThread = primaryThread = new Thread(this, "Server thread"); // Moved from main // PandaSpigot - comment out; we assign above
@@ -735,7 +738,7 @@ public abstract class MinecraftServer extends ReentrantIAsyncHandler<TasksPerTic
             } finally {
                 // CraftBukkit start - Restore terminal to original settings
                 try {
-                    net.minecrell.terminalconsole.TerminalConsoleAppender.close(); // PandaSpigot - Use TerminalConsoleAppender
+                    reader.getTerminal().restore();
                 } catch (Exception ignored) {
                 }
                 // CraftBukkit end
@@ -1551,8 +1554,6 @@ public abstract class MinecraftServer extends ReentrantIAsyncHandler<TasksPerTic
     }
 
     public abstract boolean ai();
-
-    public abstract ServerConnection.EventGroupType getTransport();
 
     public void setSpawnNPCs(boolean flag) {
         this.spawnNPCs = flag;

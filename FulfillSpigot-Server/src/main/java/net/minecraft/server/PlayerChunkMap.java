@@ -1,19 +1,16 @@
 package net.minecraft.server;
 
 import com.google.common.collect.Lists;
-
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 // CraftBukkit start
 import java.util.Collections;
 import java.util.Queue;
-
+import java.util.LinkedList;
 import org.bukkit.craftbukkit.chunkio.ChunkIOExecutor;
 import java.util.HashMap;
 // CraftBukkit end
@@ -22,7 +19,7 @@ public class PlayerChunkMap {
 
     private static final Logger a = LogManager.getLogger();
     private final WorldServer world;
-    private final ObjectList<EntityPlayer> managedPlayers = new ObjectArrayList<>();
+    private final List<EntityPlayer> managedPlayers = Lists.newArrayList();
     private final LongHashMap<PlayerChunkMap.PlayerChunk> d = new LongHashMap();
     private final Queue<PlayerChunkMap.PlayerChunk> e = new java.util.concurrent.ConcurrentLinkedQueue<PlayerChunkMap.PlayerChunk>(); // CraftBukkit ArrayList -> ConcurrentLinkedQueue
     private final Queue<PlayerChunkMap.PlayerChunk> f = new java.util.concurrent.ConcurrentLinkedQueue<PlayerChunkMap.PlayerChunk>(); // CraftBukkit ArrayList -> ConcurrentLinkedQueue
@@ -130,7 +127,7 @@ public class PlayerChunkMap {
         entityplayer.e = entityplayer.locZ;
 
         // CraftBukkit start - Load nearby chunks first
-        ObjectList<ChunkCoordIntPair> chunkList = new ObjectArrayList<>();
+        List<ChunkCoordIntPair> chunkList = new LinkedList<ChunkCoordIntPair>();
 
         // PaperSpigot start - Player view distance API
         for (int k = i - entityplayer.viewDistance; k <= i + entityplayer.viewDistance; ++k) {
@@ -151,7 +148,7 @@ public class PlayerChunkMap {
     }
 
     public void b(EntityPlayer entityplayer) {
-        ObjectList<ChunkCoordIntPair> arraylist = new ObjectArrayList<>(entityplayer.chunkCoordIntPairQueue);
+        ArrayList arraylist = Lists.newArrayList(entityplayer.chunkCoordIntPairQueue);
         int i = 0;
         int j = entityplayer.viewDistance; // PaperSpigot - Player view distance API
         int k = (int) entityplayer.locX >> 4;
@@ -234,7 +231,7 @@ public class PlayerChunkMap {
             int i1 = entityplayer.viewDistance; // PaperSpigot - Player view distance API
             int j1 = i - k;
             int k1 = j - l;
-            ObjectList<ChunkCoordIntPair> chunksToLoad = new ObjectArrayList<>(); // CraftBukkit
+            List<ChunkCoordIntPair> chunksToLoad = new LinkedList<ChunkCoordIntPair>(); // CraftBukkit
 
             if (j1 != 0 || k1 != 0) {
                 for (int l1 = i - i1; l1 <= i + i1; ++l1) {
@@ -281,7 +278,7 @@ public class PlayerChunkMap {
         i = MathHelper.clamp(i, 3, 32);
         if (i != this.g) {
             int j = i - this.g;
-            ObjectList<EntityPlayer> arraylist = new ObjectArrayList<>(this.managedPlayers);
+            ArrayList arraylist = Lists.newArrayList(this.managedPlayers);
             Iterator iterator = arraylist.iterator();
 
             while (iterator.hasNext()) {

@@ -1,6 +1,6 @@
 package net.minecraft.server;
 
-import xyz.zenithdev.spigot.util.FastRandom;
+import xyz.tavenservices.spigot.util.FastRandom;
 
 import java.util.Random;
 

@@ -9,45 +9,42 @@ public class PacketPlayOutPlayerListHeaderFooter implements Packet<PacketListene
     private IChatBaseComponent a;
     private IChatBaseComponent b;
 
-    public PacketPlayOutPlayerListHeaderFooter() {
-    }
+    public PacketPlayOutPlayerListHeaderFooter() {}
 
     public PacketPlayOutPlayerListHeaderFooter(IChatBaseComponent ichatbasecomponent) {
         this.a = ichatbasecomponent;
     }
 
-    @Override
-    public void a(PacketDataSerializer serializer) throws IOException {
-        this.a = serializer.d();
-        this.b = serializer.d();
+    public void a(PacketDataSerializer packetdataserializer) throws IOException {
+        this.a = packetdataserializer.d();
+        this.b = packetdataserializer.d();
     }
 
-    @Override
-    public void b(PacketDataSerializer serializer) throws IOException {
+    public void b(PacketDataSerializer packetdataserializer) throws IOException {
         // Paper start
         if (this.header != null) {
-            serializer.a(net.md_5.bungee.chat.ComponentSerializer.toString(this.header));
+            packetdataserializer.a(net.md_5.bungee.chat.ComponentSerializer.toString(this.header));
         } else {
-            serializer.a(this.a);
+            packetdataserializer.a(this.a);
         }
 
         if (this.footer != null) {
-            serializer.a(net.md_5.bungee.chat.ComponentSerializer.toString(this.footer));
+            packetdataserializer.a(net.md_5.bungee.chat.ComponentSerializer.toString(this.footer));
         } else {
-            serializer.a(this.b);
+            packetdataserializer.a(this.b);
         }
         // Paper end
     }
 
-    @Override
     public void a(PacketListenerPlayOut packetlistenerplayout) {
         packetlistenerplayout.a(this);
     }
 
     // PaperSpigot start - fix compile error
     /*
-     * public void a(PacketListener packetlistener) { this.a((PacketListenerPlayOut)
-     * packetlistener); }
-     */
+    public void a(PacketListener packetlistener) {
+        this.a((PacketListenerPlayOut) packetlistener);
+    }
+    */
     // PaperSpigot end
 }

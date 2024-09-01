@@ -23,9 +23,9 @@ public class EntityItem extends Entity {
         this.setSize(0.25F, 0.25F);
         this.setPosition(d0, d1, d2);
         this.yaw = (float) (Math.random() * 360.0D);
-        this.motX = (float) (Math.random() * 0.20000000298023224D - 0.10000000149011612D);
+        this.motX = (double) ((float) (Math.random() * 0.20000000298023224D - 0.10000000149011612D));
         this.motY = 0.20000000298023224D;
-        this.motZ = (float) (Math.random() * 0.20000000298023224D - 0.10000000149011612D);
+        this.motZ = (double) ((float) (Math.random() * 0.20000000298023224D - 0.10000000149011612D));
     }
 
     public EntityItem(World world, double d0, double d1, double d2, ItemStack itemstack) {

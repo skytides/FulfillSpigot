@@ -1,15 +1,14 @@
 package net.minecraft.server;
 
-import com.google.common.collect.Lists;
 import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Iterator;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 // CraftBukkit start
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
+import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
@@ -20,8 +19,7 @@ import org.bukkit.craftbukkit.util.LongObjectHashMap;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.github.paperspigot.event.ServerExceptionEvent;
 import org.github.paperspigot.exception.ServerInternalException;
-import xyz.zenithdev.spigot.config.FulfillSpigotConfig;
-import xyz.zenithdev.spigot.util.FastRandom;
+import xyz.tavenservices.spigot.util.FastRandom;
 // CraftBukkit end
 
 public class ChunkProviderServer implements IChunkProvider {
@@ -33,10 +31,6 @@ public class ChunkProviderServer implements IChunkProvider {
     private IChunkLoader chunkLoader;
     public boolean forceChunkLoad = false; // CraftBukkit - true -> false
     public LongObjectHashMap<Chunk> chunks = new LongObjectHashMap<Chunk>();
-    // FulfillSpigot start
-    private Map<Long, Long> delayedUnloadChunks = new HashMap<>(); // Delayed unload map
-    private static final long UNLOAD_DELAY_MS = TimeUnit.SECONDS.toMillis(FulfillSpigotConfig.get().delayedChunkTicking);
-    // FulfillSpigot end
     public WorldServer world;
 
     public ChunkProviderServer(WorldServer worldserver, IChunkLoader ichunkloader, IChunkProvider ichunkprovider) {
@@ -56,15 +50,16 @@ public class ChunkProviderServer implements IChunkProvider {
         return this.chunks.values();
         // CraftBukkit end
     }
-    // FulfillSpigot start - proper block ticking
+
     public void queueUnload(int i, int j) {
         long key = LongHash.toLong(i, j); // PandaSpigot - Only create key once
-
+        // PaperSpigot start - Asynchronous lighting updates
         Chunk chunk = chunks.get(key); // PandaSpigot - Reuse key
         if (chunk != null && chunk.world.paperSpigotConfig.useAsyncLighting && (chunk.pendingLightUpdates.get() > 0 || chunk.world.getTime() - chunk.lightUpdateTime < 20)) {
             return;
         }
-
+        // PaperSpigot end
+        // PaperSpigot start - Don't unload chunk if it contains an entity that loads chunks
         if (chunk != null) {
             for (List<Entity> entities : chunk.entitySlices) {
                 for (Entity entity : entities) {
@@ -74,46 +69,32 @@ public class ChunkProviderServer implements IChunkProvider {
                 }
             }
         }
-
+        // PaperSpigot end
         if (this.world.worldProvider.e()) {
             if (!this.world.c(i, j)) {
-                this.delayedUnloadChunks.put(key, System.currentTimeMillis() + UNLOAD_DELAY_MS);
+                // CraftBukkit start
+                this.unloadQueue.add(i, j);
+
                 Chunk c = chunks.get(key); // PandaSpigot - Reuse key
                 if (c != null) {
                     c.mustSave = true;
                 }
+                // CraftBukkit end
             }
         } else {
-            this.delayedUnloadChunks.put(key, System.currentTimeMillis() + UNLOAD_DELAY_MS);
+            // CraftBukkit start
+            this.unloadQueue.add(i, j);
+
             Chunk c = chunks.get(key); // PandaSpigot - Reuse key
             if (c != null) {
                 c.mustSave = true;
             }
+            // CraftBukkit end
         }
+
     }
-
-    public void handleDelayedUnloads() {
-        long currentTime = System.currentTimeMillis();
-        Iterator<Map.Entry<Long, Long>> iterator = this.delayedUnloadChunks.entrySet().iterator();
-
-        while (iterator.hasNext()) {
-            Map.Entry<Long, Long> entry = iterator.next();
-            if (currentTime >= entry.getValue()) {
-                long key = entry.getKey();
-                int x = LongHash.msw(key);
-                int z = LongHash.lsw(key);
-
-                this.unloadQueue.add(x, z);
-                iterator.remove();
-            }
-        }
-    }
-
-
 
     public void b() {
-        handleDelayedUnloads();
-        // FulfillSpigot end - proper block ticking
         Iterator iterator = this.chunks.values().iterator();
 
         while (iterator.hasNext()) {
@@ -332,13 +313,12 @@ public class ChunkProviderServer implements IChunkProvider {
                 BlockSand.instaFall = false;
                 this.world.getServer().getPluginManager().callEvent(new org.bukkit.event.world.ChunkPopulateEvent(chunk.bukkitChunk));
                 // CraftBukkit end
-
+                
                 chunk.e();
             }
         }
 
     }
-
 
     public boolean a(IChunkProvider ichunkprovider, Chunk chunk, int i, int j) {
         if (this.chunkProvider != null && this.chunkProvider.a(ichunkprovider, chunk, i, j)) {

@@ -18,7 +18,7 @@ public class ServerShutdownThread extends Thread {
             ex.printStackTrace();
         } finally {
             try {
-                net.minecrell.terminalconsole.TerminalConsoleAppender.close(); // PandaSpigot - Use TerminalConsoleAppender
+                server.reader.getTerminal().restore();
             } catch (Exception e) {
             }
         }

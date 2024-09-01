@@ -25,7 +25,7 @@ import java.util.UUID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.github.paperspigot.exception.ServerInternalException;
-import xyz.zenithdev.spigot.config.FulfillSpigotConfig;
+import xyz.tavenservices.spigot.config.FulfillSpigotConfig;
 
 public class NameReferencingFileConverter {
 

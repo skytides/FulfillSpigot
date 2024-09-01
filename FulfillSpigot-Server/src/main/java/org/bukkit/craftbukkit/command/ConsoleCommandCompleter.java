@@ -7,15 +7,16 @@ import java.util.logging.Level;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.util.Waitable;
 
-//import jline.console.completer.Completer; // PandaSpigot - Remove jline2 import
+import jline.console.completer.Completer;
 
-public class ConsoleCommandCompleter /*implements Completer*/ { // PandaSpigot - This class is no longer used
+public class ConsoleCommandCompleter implements Completer {
     private final CraftServer server;
 
     public ConsoleCommandCompleter(CraftServer server) {
         this.server = server;
     }
 
+    @Override
     public int complete(final String buffer, final int cursor, final List<CharSequence> candidates) {
         Waitable<List<String>> waitable = new Waitable<List<String>>() {
             @Override
