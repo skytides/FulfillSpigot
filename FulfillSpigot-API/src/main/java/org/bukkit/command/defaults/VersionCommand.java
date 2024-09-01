@@ -94,7 +94,7 @@ public class VersionCommand extends BukkitCommand {
         sender.sendMessage(ChatColor.DARK_PURPLE + "------------------------------");
         sender.sendMessage(ChatColor.LIGHT_PURPLE + "This server is Running" + ChatColor.GOLD + " FulfillSpigot");
         sender.sendMessage(ChatColor.LIGHT_PURPLE + "Developed by" + ChatColor.GOLD + " Exile Team");
-        sender.sendMessage(ChatColor.LIGHT_PURPLE + "Version: " + ChatColor.YELLOW + "1.7.0"); //TODO: dont need an actual version check its fine to do it directly in the string.
+        sender.sendMessage(ChatColor.LIGHT_PURPLE + "Version: " + ChatColor.YELLOW + "1.8.0"); //TODO: dont need an actual version check its fine to do it directly in the string.
         sender.sendMessage(ChatColor.DARK_PURPLE + "------------------------------");
     }
 }
