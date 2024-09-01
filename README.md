@@ -1,10 +1,20 @@
 # FulfillSpigot [![Discord](https://img.shields.io/discord/1276852858221887508?label=Discord)](https://discord.gg/qDtjyaGZvm)
 
+### This project is no longer maintained!
+
+[PandaSpigot](https://github.com/hpfxd/PandaSpigot) and [CarbonSpigot](https://refinedev.xyz/resources/carbon.15/) stand out as the most promising options.
+
 Discord Server: https://discord.gg/qDtjyaGZvm
 
-FulfillSpigot is the top choice for a highly optimized 1.8.8 Spigot fork, specifically designed to boost performance and perfectly replicate almost the exact same Minemen Club's (ClubSpigot) mechanics, As well as extremely great NMS optimizationsn and much more.
+## FulfillSpigot
 
-This Spigot is perfect for practice servers and 1.8.8 minigames like Bedwars, Skywars, and more, ensuring a smooth and competitive gameplay experience.
+FulfillSpigot brings significant performance upgrades and bug fixes, optimizing server stability even with high player counts. While we haven't conducted formal benchmarks yet, the server has already handled over 100 real players and 1000+ bots while maintaining consistent 20 TPS.
+
+FulfillSpigot has also been thoroughly tested on a practice server.
+
+## Download
+The latest stable release can be downloaded from the releases section.
+API can be downloaded from the discord server
 
 ## Building
 
