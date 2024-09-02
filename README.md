@@ -58,7 +58,6 @@ To compile FulfillSpigot, you'll need:
 [FulfillSpigot-0023] Remove dead NMS code
 [FulfillSpigot-0024] Revert Netty back to 4.1x
 
-
 [PandaSpigot-0015] Configuration Patch
 [PandaSpigot-0004] Backport modern tick loop
 [PandaSpigot-0005] Backport handshake event
