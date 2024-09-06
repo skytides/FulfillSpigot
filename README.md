@@ -82,7 +82,6 @@ To compile FulfillSpigot, you'll need:
 [PandaSpigot-0036] Backport-PlayerProfile-API.patch
 [PandaSpigot-0037] Sound-events.patch
 [PandaSpigot-0038] Optimize-VarInt-reading-and-writing.patch
- 
 
 [????-????] Better tablist API and fix tcp overhead
 
