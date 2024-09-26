@@ -1,8 +1,6 @@
 # FulfillSpigot [![Discord](https://img.shields.io/discord/1276852858221887508?label=Discord)](https://discord.gg/qDtjyaGZvm)
 
-### This project is no longer maintained!
-
-[PandaSpigot](https://github.com/hpfxd/PandaSpigot) and [CarbonSpigot](https://refinedev.xyz/resources/carbon.15/) stand out as the most promising options.
+### This project is now being maintained!
 
 Discord Server: https://discord.gg/qDtjyaGZvm
 
