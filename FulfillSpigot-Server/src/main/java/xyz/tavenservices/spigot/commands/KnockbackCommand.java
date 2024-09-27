@@ -79,6 +79,7 @@ public class KnockbackCommand extends Command {
         player.sendMessage(ChatColor.LIGHT_PURPLE + " o Max Range Reduction: " + ChatColor.WHITE + currentProfile.getMaxRangeReduction());
         player.sendMessage(ChatColor.LIGHT_PURPLE + " o Start Range Reduction: " + ChatColor.WHITE + currentProfile.getStartRangeReduction());
         player.sendMessage(ChatColor.LIGHT_PURPLE + " o Min Range: " + ChatColor.WHITE + currentProfile.getMinRange());
+        player.sendMessage(ChatColor.LIGHT_PURPLE + " o Friction: " + ChatColor.WHITE + currentProfile.getFriction());
         player.sendMessage("");
     }
 
