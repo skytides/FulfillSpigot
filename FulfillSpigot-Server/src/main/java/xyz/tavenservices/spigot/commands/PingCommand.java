@@ -16,23 +16,18 @@ public class PingCommand extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage("This may only be used by Players");
-            return true;
-        }
-
         Player player = (Player) sender;
 
         if (args.length == 0) {
             int ping = player.spigot().getPing();
-            player.sendMessage(ChatColor.LIGHT_PURPLE + "Your ping: " + ping + " ms.");
+            player.sendMessage(ChatColor.AQUA + "Your ping: " + ChatColor.WHITE + ping + " ms.");
         } else if (args.length == 1) {
             Player targetPlayer = Bukkit.getPlayer(args[0]);
             if (targetPlayer != null) {
                 int targetPing = targetPlayer.spigot().getPing();
-                player.sendMessage(ChatColor.LIGHT_PURPLE + targetPlayer.getName() + "'s ping: " + targetPing + " ms.");
+                player.sendMessage(ChatColor.AQUA + targetPlayer.getName() + "'s ping: " + ChatColor.WHITE + targetPing + " ms.");
             } else {
-                player.sendMessage(ChatColor.RED + "That player is not online.");
+                player.sendMessage(ChatColor.AQUA + "That player is not online.");
             }
         }
 
