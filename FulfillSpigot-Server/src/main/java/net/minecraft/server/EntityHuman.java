@@ -7,6 +7,7 @@ import com.mojang.authlib.GameProfile;
 import java.util.*;
 
 // CraftBukkit start
+import net.jafama.FastMath;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.TrigMath;
@@ -1020,9 +1021,9 @@ public abstract class EntityHuman extends EntityLiving {
                         CraftKnockbackProfile kb = (CraftKnockbackProfile) ((this.getKnockbackProfile() == null) ? KnockbackConfig.getCurrentKb()
                             : this.getKnockbackProfile());
                         entity.g(
-                            -MathHelper.sin(this.yaw * (float) Math.PI / 180.0f) * 0.5f,
+                            -FastMath.sin(this.yaw * (float) Math.PI / 180.0f) * 0.5f,
                             0.1,
-                            MathHelper.cos(this.yaw * (float) Math.PI / 180.0f) * 0.5f
+                            FastMath.cos(this.yaw * (float) Math.PI / 180.0f) * 0.5f
                         );
 
                         if (entity instanceof EntityPlayer && entity.velocityChanged) {
