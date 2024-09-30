@@ -34,7 +34,7 @@ public class SimpleCommandMap implements CommandMap {
     private void setDefaultCommands() {
         register("bukkit", new VersionCommand("version"));
         register("bukkit", new ReloadCommand("reload"));
-        register("bukkit", new PluginsCommand("plugins"));
+        //register("bukkit", new PluginsCommand("plugins")); - FulfillSpigot - deregister
         register("bukkit", new co.aikar.timings.TimingsCommand("timings")); // Spigot
     }
 

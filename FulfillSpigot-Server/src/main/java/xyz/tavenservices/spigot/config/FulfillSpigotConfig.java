@@ -156,8 +156,7 @@ public class FulfillSpigotConfig {
         "32 GB RAM: Cache Size: 2800-5600 entries")
     public int maxCacheSize = 500;
 
-    @Comment("How many seconds should it wait to unload chunks with delay for proper block ticking (Recommended 10 seconds")
-    public int delayedChunkTicking = 10;
+    public int pluginsPerPage = 10;
 
 
     public static boolean stopDecodingItemStackOnPlace = true;

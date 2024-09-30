@@ -8,7 +8,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import xyz.tavenservices.spigot.commands.KnockbackCommand;
 import xyz.tavenservices.spigot.commands.LoadedChunksCommand;
 import xyz.tavenservices.spigot.commands.PingCommand;
-import xyz.tavenservices.spigot.commands.ReloadCommand;
+import xyz.tavenservices.spigot.commands.PluginsCommand;
 import xyz.tavenservices.spigot.config.FulfillSpigotConfig;
 import xyz.tavenservices.spigot.config.KnockbackConfig;
 
@@ -25,6 +25,8 @@ public class FulfillSpigot {
     public FulfillSpigot() {
         INSTANCE = this;
         this.init();
+        this.reload();
+        reloadKnockbackConfig();
     }
 
     public void reload() {
@@ -32,7 +34,6 @@ public class FulfillSpigot {
     }
 
     public void reloadKnockbackConfig() {
-        // it always exists just another check for it to work because reloading in spigots is kinda different.
         if (knockbackConfigFile == null) {
             knockbackConfigFile = new File("knockback.yml");
         }
@@ -57,15 +58,14 @@ public class FulfillSpigot {
         PingCommand pingCommand = new PingCommand("ping");
         commandMap.register(pingCommand.getName(), "", pingCommand);
 
-
-        KnockbackCommand knockbackCommand = new KnockbackCommand();
+        KnockbackCommand knockbackCommand = new KnockbackCommand("knockback");
         commandMap.register(knockbackCommand.getName(), "", knockbackCommand);
 
         LoadedChunksCommand loadedChunksCommand = new LoadedChunksCommand("loadedchunks");
         commandMap.register(loadedChunksCommand.getName(), "", loadedChunksCommand);
 
-        ReloadCommand reloadCommand = new ReloadCommand("kbreload");
-        commandMap.register(reloadCommand.getName(), "", reloadCommand);
+        PluginsCommand pluginsCommand = new PluginsCommand("plugins");
+        commandMap.register(pluginsCommand.getName(), "", pluginsCommand);
 
     }
 
