@@ -5,6 +5,7 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import net.jafama.FastMath;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.entity.CraftEntity;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
@@ -922,7 +923,7 @@ public abstract class EntityLiving extends Entity {
         double maxRangeReduction = kb.getMaxRangeReduction();
 
         double modifiedRange = knockbackRangeFactor * (distance - startRangeReduction);
-        return Math.min(modifiedRange, maxRangeReduction);
+        return FastMath.min(modifiedRange, maxRangeReduction);
     }
 
     public void a(Entity opponent, double x, double z, DamageSource source) {
@@ -942,7 +943,7 @@ public abstract class EntityLiving extends Entity {
 
             double frictionHorizontal = 2.0 - (1.0 - knockbackHorizontal);
 
-            float f1 = MathHelper.sqrt(x * x + z * z);
+            float f1 = (float) FastMath.sqrt(x * x + z * z);
 
             float f2 = (float) (0.4D * (1.0D - 0.4D * (1.0D - knockbackHorizontal)));
 
