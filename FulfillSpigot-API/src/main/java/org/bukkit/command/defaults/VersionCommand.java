@@ -91,10 +91,10 @@ public class VersionCommand extends BukkitCommand {
     }
 
     private void sendServerVersion(CommandSender sender) {
-        sender.sendMessage(ChatColor.DARK_PURPLE + "------------------------------");
-        sender.sendMessage(ChatColor.LIGHT_PURPLE + "This server is Running" + ChatColor.GOLD + " FulfillSpigot");
-        sender.sendMessage(ChatColor.LIGHT_PURPLE + "Developed by" + ChatColor.GOLD + " Exile Team");
-        sender.sendMessage(ChatColor.LIGHT_PURPLE + "Version: " + ChatColor.YELLOW + "1.8.0"); //TODO: dont need an actual version check its fine to do it directly in the string.
-        sender.sendMessage(ChatColor.DARK_PURPLE + "------------------------------");
+        sender.sendMessage(ChatColor.AQUA + "------------------------------");
+        sender.sendMessage(ChatColor.AQUA + "This server is Running " + ChatColor.WHITE + "FulfillSpigot");
+        sender.sendMessage(ChatColor.AQUA + "Developed by " + ChatColor.WHITE + "Taven team");
+        sender.sendMessage(ChatColor.AQUA + "Version: " + ChatColor.WHITE + "1.9.0"); // actual version fetcher not needed yet
+        sender.sendMessage(ChatColor.AQUA + "------------------------------");
     }
 }
