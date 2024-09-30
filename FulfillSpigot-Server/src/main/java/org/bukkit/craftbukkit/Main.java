@@ -240,7 +240,6 @@ public class Main {
                 // Spigot End
                 System.setProperty("library.jansi.version", "PandaSpigot"); // PandaSpigot - set meaningless jansi version to prevent git builds from crashing on Windows
                 System.out.println("Loading libraries, please wait...");
-                System.out.println("Made with love by Exile Team.");
                 // PandaSpigot start - Modern tick loop
                 net.minecraft.server.DispenserRegistry.c();
                 OptionSet finalOptions = options;
