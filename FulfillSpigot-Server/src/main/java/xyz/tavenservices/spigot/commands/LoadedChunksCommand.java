@@ -25,15 +25,11 @@ public class LoadedChunksCommand extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage("This may only be used by Players");
-            return true;
-        }
 
         Player player = (Player) sender;
 
         if (!player.hasPermission("fulfillspigot.command.loadedchunks")) {
-            player.sendMessage("No permission.");
+            player.sendMessage(ChatColor.WHITE + "No permission :(");
             return true;
         }
 
@@ -47,10 +43,10 @@ public class LoadedChunksCommand extends Command {
                 chunkZ = Integer.parseInt(args[3]);
                 unloadChunk(player, worldName, chunkX, chunkZ);
             } catch (NumberFormatException e) {
-                player.sendMessage("Invalid chunk coordinates.");
+                player.sendMessage(ChatColor.WHITE + "Invalid chunk coordinates.");
             }
         } else {
-            player.sendMessage("Usage: /loadedchunks or /loadedchunks unload <world> <x> <z>");
+            player.sendMessage(ChatColor.WHITE + "Usage: /loadedchunks or /loadedchunks unload <world> <x> <z>");
         }
 
         return true;
@@ -61,22 +57,21 @@ public class LoadedChunksCommand extends Command {
         int totalPages = (int) Math.ceil((double) allChunks.size() / CHUNKS_PER_PAGE);
 
         if (page < 1 || page > totalPages) {
-            player.sendMessage("Invalid page number.");
+            player.sendMessage(ChatColor.WHITE + "Invalid page number.");
             return;
         }
 
-        player.sendMessage(ChatColor.DARK_PURPLE + "=== Loaded Chunks - Page " + page + "/" + totalPages + " ===");
-        player.sendMessage(ChatColor.LIGHT_PURPLE + "Total Loaded Chunks: " + allChunks.size() + "\n");
+        player.sendMessage(ChatColor.AQUA + "=== Loaded Chunks - Page " + page + "/" + totalPages + " ===");
+        player.sendMessage(ChatColor.WHITE + "Total Loaded Chunks: " + allChunks.size() + "\n");
 
         int startIndex = (page - 1) * CHUNKS_PER_PAGE;
         int endIndex = Math.min(startIndex + CHUNKS_PER_PAGE, allChunks.size());
 
         for (int i = startIndex; i < endIndex; i++) {
             Chunk chunk = allChunks.get(i);
-            player.sendMessage(ChatColor.LIGHT_PURPLE + "- World: " + chunk.getWorld().getName() + " X: " + chunk.getX() + " Z: " + chunk.getZ());
+            player.sendMessage(ChatColor.AQUA + "- World: " + chunk.getWorld().getName() + " X: " + chunk.getX() + " Z: " + chunk.getZ());
         }
     }
-
 
     private List<Chunk> getAllLoadedChunks() {
         List<Chunk> allChunks = new ArrayList<>();
@@ -86,19 +81,18 @@ public class LoadedChunksCommand extends Command {
         return allChunks;
     }
 
-
     private void unloadChunk(Player player, String worldName, int chunkX, int chunkZ) {
         World world = Bukkit.getWorld(worldName);
         if (world != null) {
             Chunk chunk = world.getChunkAt(chunkX, chunkZ);
             if (world.isChunkLoaded(chunkX, chunkZ)) {
                 world.unloadChunk(chunkX, chunkZ);
-                player.sendMessage(ChatColor.LIGHT_PURPLE + "Unloaded chunk (" + chunkX + ", " + chunkZ + ") in world §b" + worldName + "§a.");
+                player.sendMessage(ChatColor.AQUA + "Unloaded chunk (" + chunkX + ", " + chunkZ + ") in world " + ChatColor.WHITE + worldName + ".");
             } else {
-                player.sendMessage(ChatColor.LIGHT_PURPLE + "Chunk (" + chunkX + ", " + chunkZ + ") is not loaded in world §b" + worldName + "§c.");
+                player.sendMessage(ChatColor.AQUA + "Chunk (" + chunkX + ", " + chunkZ + ") is not loaded in world " + ChatColor.WHITE + worldName + ".");
             }
         } else {
-            player.sendMessage(ChatColor.LIGHT_PURPLE + "World " + worldName + " does not exist.");
+            player.sendMessage(ChatColor.AQUA + "World " + ChatColor.WHITE + worldName + " does not exist.");
         }
     }
 }
