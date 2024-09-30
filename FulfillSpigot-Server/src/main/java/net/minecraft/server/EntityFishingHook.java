@@ -5,6 +5,7 @@ import java.util.List;
 
 // CraftBukkit start
 import com.destroystokyo.paper.paper.event.entity.ProjectileCollideEvent;
+import net.jafama.FastMath;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Fish;
 import org.bukkit.event.player.PlayerFishEvent;
@@ -218,13 +219,13 @@ public class EntityFishingHook extends Entity {
 
             if (!this.as) {
                 this.move(this.motX, this.motY, this.motZ);
-                float f1 = MathHelper.sqrt(this.motX * this.motX + this.motZ * this.motZ);
+                float f1 = (float) FastMath.sqrt(this.motX * this.motX + this.motZ * this.motZ);
 
-                this.yaw = (float) (MathHelper.b(this.motX, this.motZ) * 180.0D / 3.1415927410125732D);
-
-                for (this.pitch = (float) (MathHelper.b(this.motY, (double) f1) * 180.0D / 3.1415927410125732D); this.pitch - this.lastPitch < -180.0F; this.lastPitch -= 360.0F) {
-                    ;
-                }
+                // FulfillSpigot start
+                this.yaw = (float) (MathHelper.b(this.motX, this.motZ) * 180.0D / Math.PI);
+                this.pitch = (float) (MathHelper.b(this.motY, f1) * 180.0D / Math.PI);
+                this.pitch = this.lastPitch + (this.pitch - this.lastPitch) * 0.1F;
+                this.yaw = this.lastYaw + (this.yaw - this.lastYaw) * 0.1F;
 
                 while (this.pitch - this.lastPitch >= 180.0F) {
                     this.lastPitch += 360.0F;
@@ -240,8 +241,9 @@ public class EntityFishingHook extends Entity {
 
                 this.pitch = this.lastPitch + (this.pitch - this.lastPitch) * 0.2F;
                 this.yaw = this.lastYaw + (this.yaw - this.lastYaw) * 0.2F;
-                float f2 = 0.92F;
 
+                float f2 = this.onGround || this.positionChanged ? 0.5F : 0.92F;
+                // FulfillSpigot end
                 if (this.onGround || this.positionChanged) {
                     f2 = 0.5F;
                 }
