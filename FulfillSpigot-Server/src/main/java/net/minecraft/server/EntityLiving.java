@@ -913,19 +913,6 @@ public abstract class EntityLiving extends Entity {
         return entity.getLocation().distance(target.getLocation());
     }
 
-    private double calculateModifiedRange(CraftKnockbackProfile kb, double distance) {
-        if (distance <= kb.getStartRangeReduction()) {
-            return 0.0;
-        }
-
-        double knockbackRangeFactor = kb.getRangeFactor();
-        double startRangeReduction = kb.getStartRangeReduction();
-        double maxRangeReduction = kb.getMaxRangeReduction();
-
-        double modifiedRange = knockbackRangeFactor * (distance - startRangeReduction);
-        return FastMath.min(modifiedRange, maxRangeReduction);
-    }
-
     public void a(Entity opponent, double x, double z, DamageSource source) {
         if (this.random.nextDouble() >= this.getAttributeInstance(GenericAttributes.c).getValue()) {
             this.ai = true;
@@ -936,7 +923,7 @@ public abstract class EntityLiving extends Entity {
                     this.getKnockbackProfile());
 
             double distance = this.distance(opponent, this);
-            double rangeReduction = this.calculateModifiedRange(kb, distance);
+            double rangeReduction = FastMath.min(kb.getRangeFactor() * (distance - kb.getStartRangeReduction()), kb.getMaxRangeReduction());
 
             double knockbackHorizontal = kb.getHorizontal();
             double knockbackVertical = kb.getVertical();
