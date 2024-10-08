@@ -8,6 +8,8 @@ Discord Server: https://discord.gg/qDtjyaGZvm
 
 FulfillSpigot brings significant performance upgrades and bug fixes, optimizing server stability even with high player counts. While we haven't conducted formal benchmarks yet, the server has already handled over 100 real players and 1000+ bots while maintaining consistent 20 TPS.
 
+Project of Sumo AC; This project is now abandoned.
+
 FulfillSpigot has also been thoroughly tested on a practice server.
 
 ## Download
@@ -23,7 +25,8 @@ To compile FulfillSpigot, you'll need:
 
 ## Team
 
-- **Elrin**: Author of FulfillSpigot.
+- **Skytides**: Author of FulfillSpigot.
+- **Cruint**: Now owned by cruint.
 - **Savrien**: Original creator of the knockback system and a valued member of our development team.
 - **Venyo**: Maintainer.
 
