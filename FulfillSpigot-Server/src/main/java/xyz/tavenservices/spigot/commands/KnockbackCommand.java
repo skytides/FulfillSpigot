@@ -38,8 +38,6 @@ public class KnockbackCommand extends Command {
                     ChatColor.WHITE + ", " + ChatColor.AQUA +
                     currentProfile.getStartRangeReduction() +
                     ChatColor.WHITE + ", " + ChatColor.AQUA +
-                    currentProfile.getMinRange() +
-                    ChatColor.WHITE + ", " + ChatColor.AQUA +
                     currentProfile.getFriction());
 
             sender.sendMessage(ChatColor.WHITE + "" + ChatColor.BOLD + "Knockback Commands:");
@@ -113,10 +111,6 @@ public class KnockbackCommand extends Command {
                     case "startrangereduction":
                         profile.setStartRangeReduction(value);
                         sender.sendMessage(ChatColor.WHITE + "Set start range reduction to " + ChatColor.AQUA + value + ChatColor.WHITE + " for profile " + ChatColor.AQUA + profileName + ChatColor.WHITE + ".");
-                        break;
-                    case "minrange":
-                        profile.setMinRange(value);
-                        sender.sendMessage(ChatColor.WHITE + "Set idle range to " + ChatColor.AQUA + value + ChatColor.WHITE + " for profile " + ChatColor.AQUA + profileName + ChatColor.WHITE + ".");
                         break;
                     case "friction":
                         profile.setFriction(value);

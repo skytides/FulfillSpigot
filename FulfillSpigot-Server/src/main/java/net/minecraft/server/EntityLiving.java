@@ -926,7 +926,6 @@ public abstract class EntityLiving extends Entity {
             double rangeReduction = FastMath.min(kb.getRangeFactor() * (distance - kb.getStartRangeReduction()), kb.getMaxRangeReduction());
 
             double knockbackHorizontal = kb.getHorizontal();
-            double knockbackVertical = kb.getVertical();
 
             double frictionHorizontal = 2.0 - (1.0 - knockbackHorizontal);
 
@@ -936,17 +935,12 @@ public abstract class EntityLiving extends Entity {
 
             this.motX /= frictionHorizontal;
             this.motZ /= frictionHorizontal;
-            this.motY = knockbackVertical;
+            this.motY = FastMath.min(kb.getVertical(), 0.4000000059604645D);
 
             double horizontalStable = ((double)f2 - rangeReduction);
 
             this.motX -= x / (double)f1 * horizontalStable;
             this.motZ -= z / (double)f1 * horizontalStable;
-
-            if (this.motY > 0.4000000059604645D) {
-                this.motY = 0.4000000059604645D;
-            }
-        }
     }
 
     // FulfillSpigot KB end

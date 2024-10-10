@@ -64,7 +64,6 @@ public class KnockbackConfig {
             profile.setStartRangeReduction(getDouble(path + ".start-range-reduction", 3.0D));
             profile.setMaxRangeReduction(getDouble(path + ".max-range-reduction", 1.2D));
             profile.setRangeFactor(getDouble(path + ".range-factor", 0.025D));
-            profile.setMinRange(getDouble(path + ".min-range", 0.12D));
             profile.setFriction(getDouble(path + ".friction", 2.0));
         }
 
