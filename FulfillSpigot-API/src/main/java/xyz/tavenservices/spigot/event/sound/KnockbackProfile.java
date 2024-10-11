@@ -10,6 +10,4 @@ public interface KnockbackProfile {
     String getName();
 
     void setName(String name);
-
-    KnockbackType getType();
 }
