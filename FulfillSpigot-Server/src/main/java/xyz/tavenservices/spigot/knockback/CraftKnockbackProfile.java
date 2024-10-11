@@ -56,8 +56,4 @@ public class CraftKnockbackProfile implements KnockbackProfile {
         this.name = name;
     }
 
-    @Override
-    public KnockbackType getType() {
-        return null;
-    }
 }
