@@ -923,7 +923,7 @@ public abstract class EntityLiving extends Entity {
                     this.getKnockbackProfile());
 
             double distance = this.distance(opponent, this);
-            double rangeReduction = FastMath.min(kb.getRangeFactor() * (distance - kb.getStartRangeReduction()), kb.getMaxRangeReduction());
+            double rangeReduction = Math.min(kb.getRangeFactor() * (distance - kb.getStartRangeReduction()), kb.getMaxRangeReduction());
 
             double knockbackHorizontal = kb.getHorizontal();
 
@@ -935,7 +935,7 @@ public abstract class EntityLiving extends Entity {
 
             this.motX /= frictionHorizontal;
             this.motZ /= frictionHorizontal;
-            this.motY = FastMath.min(kb.getVertical(), 0.4000000059604645D);
+            this.motY = Math.min(kb.getVertical(), 0.4F);
 
             double horizontalStable = ((double)f2 - rangeReduction);
 
