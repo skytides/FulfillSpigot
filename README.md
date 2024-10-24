@@ -1,4 +1,4 @@
-# FulfillSpigot [![Discord](https://img.shields.io/discord/1276852858221887508?label=Discord)](https://discord.gg/qDtjyaGZvm)
+no# FulfillSpigot [![Discord](https://img.shields.io/discord/1276852858221887508?label=Discord)](https://discord.gg/qDtjyaGZvm)
 
 ### This project is now being maintained!
 
@@ -7,8 +7,6 @@ Discord Server: https://discord.gg/qDtjyaGZvm
 ## FulfillSpigot
 
 FulfillSpigot brings significant performance upgrades and bug fixes, optimizing server stability even with high player counts. While we haven't conducted formal benchmarks yet, the server has already handled over 100 real players and 1000+ bots while maintaining consistent 20 TPS.
-
-Project of Sumo AC; This project is now abandoned.
 
 FulfillSpigot has also been thoroughly tested on a practice server.
 
@@ -26,7 +24,6 @@ To compile FulfillSpigot, you'll need:
 ## Team
 
 - **Skytides**: Author of FulfillSpigot.
-- **Cruint**: Now owned by cruint.
 - **Savrien**: Original creator of the knockback system and a valued member of our development team.
 - **Venyo**: Maintainer.
 
