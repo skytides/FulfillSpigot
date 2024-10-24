@@ -155,5 +155,3 @@ To compile FulfillSpigot, you'll need:
 [FlamePaper-0015] Patch Book Exploits
 ```
 
-**Started on: 07/04/2023**
-**Discontinued on: 8/3/2024**
