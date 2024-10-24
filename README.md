@@ -1,4 +1,4 @@
-no# FulfillSpigot [![Discord](https://img.shields.io/discord/1276852858221887508?label=Discord)](https://discord.gg/qDtjyaGZvm)
+# FulfillSpigot [![Discord](https://img.shields.io/discord/1276852858221887508?label=Discord)](https://discord.gg/qDtjyaGZvm)
 
 ### This project is now being maintained!
 
