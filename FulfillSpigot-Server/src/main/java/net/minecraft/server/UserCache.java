@@ -35,7 +35,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import org.apache.commons.io.IOUtils;
-import xyz.tavenservices.spigot.config.FulfillSpigotConfig;
+import xyz.swift.spigot.config.FulfillSpigotConfig;
 
 public class UserCache {
 

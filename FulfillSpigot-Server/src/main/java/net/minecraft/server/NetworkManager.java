@@ -30,10 +30,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
-import xyz.tavenservices.spigot.FulfillSpigot;
-import xyz.tavenservices.spigot.config.FulfillSpigotConfig;
-import xyz.tavenservices.spigot.config.PacketLimiterConfig;
-import xyz.tavenservices.spigot.util.IntervalledCounter;
+import xyz.swift.spigot.FulfillSpigot;
+import xyz.swift.spigot.config.FulfillSpigotConfig;
+import xyz.swift.spigot.config.PacketLimiterConfig;
+import xyz.swift.spigot.util.IntervalledCounter;
 
 public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
 

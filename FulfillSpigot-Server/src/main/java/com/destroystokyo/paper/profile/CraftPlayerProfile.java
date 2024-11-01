@@ -10,7 +10,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.UserCache;
 import org.apache.commons.lang3.Validate;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
-import xyz.tavenservices.spigot.config.FulfillSpigotConfig;
+import xyz.swift.spigot.config.FulfillSpigotConfig;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

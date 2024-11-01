@@ -61,7 +61,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
-import xyz.tavenservices.spigot.event.sound.KnockbackProfile;
+import xyz.swift.spigot.event.sound.KnockbackProfile;
 
 public class CraftLivingEntity extends CraftEntity implements LivingEntity {
     private CraftEntityEquipment equipment;

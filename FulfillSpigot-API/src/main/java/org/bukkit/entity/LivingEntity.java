@@ -12,7 +12,7 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
-import xyz.tavenservices.spigot.event.sound.KnockbackProfile;
+import xyz.swift.spigot.event.sound.KnockbackProfile;
 
 
 /**

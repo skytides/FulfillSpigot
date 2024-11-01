@@ -19,7 +19,7 @@ import org.bukkit.craftbukkit.util.LongObjectHashMap;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.github.paperspigot.event.ServerExceptionEvent;
 import org.github.paperspigot.exception.ServerInternalException;
-import xyz.tavenservices.spigot.util.FastRandom;
+import xyz.swift.spigot.util.FastRandom;
 // CraftBukkit end
 
 public class ChunkProviderServer implements IChunkProvider {
@@ -28,7 +28,7 @@ public class ChunkProviderServer implements IChunkProvider {
     public LongHashSet unloadQueue = new LongHashSet(); // CraftBukkit - LongHashSet
     public Chunk emptyChunk;
     public IChunkProvider chunkProvider;
-    private IChunkLoader chunkLoader;
+    public IChunkLoader chunkLoader;
     public boolean forceChunkLoad = false; // CraftBukkit - true -> false
     public LongObjectHashMap<Chunk> chunks = new LongObjectHashMap<Chunk>();
     public WorldServer world;

@@ -1,7 +1,7 @@
 package net.minecraft.server;
 
 import io.netty.handler.codec.DecoderException;
-import xyz.tavenservices.spigot.config.FulfillSpigotConfig;
+import xyz.swift.spigot.config.FulfillSpigotConfig;
 
 import java.io.IOException;
 

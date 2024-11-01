@@ -35,8 +35,8 @@ import org.bukkit.plugin.PluginManager;
 
 // PaperSpigot start
 import org.spigotmc.event.entity.EntityDismountEvent;
-import xyz.tavenservices.spigot.event.sound.KnockbackProfile;
-import xyz.tavenservices.spigot.util.FastRandom;
+import xyz.swift.spigot.event.sound.KnockbackProfile;
+import xyz.swift.spigot.util.FastRandom;
 // PaperSpigot end
 
 public abstract class Entity implements ICommandListener {

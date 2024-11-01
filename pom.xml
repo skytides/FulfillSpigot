@@ -9,7 +9,7 @@
         <version>7</version>
     </parent>
 
-    <groupId>xyz.tavenservices.spigot</groupId>
+    <groupId>xyz.swift.spigot</groupId>
     <artifactId>parent</artifactId>
     <version>dev-SNAPSHOT</version>
     <packaging>pom</packaging>

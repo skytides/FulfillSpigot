@@ -8,10 +8,12 @@ import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 
 public final class Versioning {
+
     public static String getBukkitVersion() {
         String result = "Unknown-Version";
 
-        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/xyz.tavenservices.spigot/fulfillspigot-api/pom.properties");
+        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream(
+                "META-INF/maven/xyz.swift.spigot/fulfillspigot/pom.properties");
         Properties properties = new Properties();
 
         if (stream != null) {
@@ -26,4 +28,5 @@ public final class Versioning {
 
         return result;
     }
+
 }

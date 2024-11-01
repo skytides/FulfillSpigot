@@ -54,7 +54,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.messaging.StandardMessenger;
 import org.bukkit.util.Vector;
 import org.github.paperspigot.exception.ServerInternalException;
-import xyz.tavenservices.spigot.util.FastRandom;
+import xyz.swift.spigot.util.FastRandom;
 
 public class CraftWorld implements World {
     public static final int CUSTOM_DIMENSION_OFFSET = 10;

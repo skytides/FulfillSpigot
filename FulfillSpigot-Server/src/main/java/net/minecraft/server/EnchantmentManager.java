@@ -2,7 +2,7 @@ package net.minecraft.server;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import xyz.tavenservices.spigot.util.FastRandom;
+import xyz.swift.spigot.util.FastRandom;
 
 import java.util.ArrayList;
 import java.util.HashMap;

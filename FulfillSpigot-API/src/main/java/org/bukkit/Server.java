@@ -12,7 +12,6 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-import com.destroystokyo.paper.paper.profile.PlayerProfile;
 import org.bukkit.Warning.WarningState;
 import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandMap;
@@ -135,6 +134,11 @@ public interface Server extends PluginMessageRecipient {
      * @return the amount of players this server allows
      */
     public int getMaxPlayers();
+
+    /**
+     * Set the maximum amount of players which can login to this server.
+     */
+    public void setMaxPlayers(int players);
 
     /**
      * Get the game port that the server runs on.
@@ -926,12 +930,12 @@ public interface Server extends PluginMessageRecipient {
 
     /**
      * Create a ChunkData for use in a generator.
-     * 
+     *
      * See {@link ChunkGenerator#generateChunkData(org.bukkit.World, java.util.Random, int, int, org.bukkit.generator.ChunkGenerator.BiomeGrid)}
-     * 
+     *
      * @param world the world to create the ChunkData for
      * @return a new ChunkData for the world
-     * 
+     *
      */
     public ChunkGenerator.ChunkData createChunkData(World world);
 
@@ -950,46 +954,6 @@ public interface Server extends PluginMessageRecipient {
      */
     CommandMap getCommandMap();
     // Paper end
-
-    // PandaSpigot start - PlayerProfile API
-    /**
-     * Creates a PlayerProfile for the specified uuid, with name as null
-     * @param uuid UUID to create profile for
-     * @return A PlayerProfile object
-     */
-    PlayerProfile createProfile(UUID uuid);
-    
-    /**
-     * Creates a PlayerProfile for the specified name, with UUID as null
-     * @param name Name to create profile for
-     * @return A PlayerProfile object
-     */
-    PlayerProfile createProfile(String name);
-    
-    /**
-     * Creates a PlayerProfile for the specified name/uuid
-     *
-     * Both UUID and Name can not be null at same time. One must be supplied.
-     *
-     * @param uuid UUID to create profile for
-     * @param name Name to create profile for
-     * @return A PlayerProfile object
-     */
-    PlayerProfile createProfile(UUID uuid, String name);
-    // PandaSpigot end
-
-    // PandaSpigot start
-    /**
-     * Returns the de facto plugins directory, generally used for storing plugin jars to be loaded,
-     * as well as their {@link org.bukkit.plugin.Plugin#getDataFolder() data folders}.
-     *
-     * <p>Plugins should use {@link org.bukkit.plugin.Plugin#getDataFolder()} rather than traversing this
-     * directory manually when determining the location in which to store their data and configuration files.</p>
-     *
-     * @return plugins directory
-     */
-    File getPluginsFolder();
-    // PandaSpigot end
 
     public class Spigot
     {

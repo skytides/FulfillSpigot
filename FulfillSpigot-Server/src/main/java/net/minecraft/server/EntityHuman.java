@@ -25,9 +25,9 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
 import org.bukkit.scoreboard.Team;
 import org.bukkit.util.Vector;
-import xyz.tavenservices.spigot.config.KnockbackConfig;
-import xyz.tavenservices.spigot.event.PlayerHealthChangeEvent;
-import xyz.tavenservices.spigot.knockback.CraftKnockbackProfile;
+import xyz.swift.spigot.config.KnockbackConfig;
+import xyz.swift.spigot.event.PlayerHealthChangeEvent;
+import xyz.swift.spigot.knockback.CraftKnockbackProfile;
 // CraftBukkit end
 
 public abstract class EntityHuman extends EntityLiving {

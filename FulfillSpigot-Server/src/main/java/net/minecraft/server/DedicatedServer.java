@@ -13,7 +13,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import jline.console.ConsoleReader;
 
 // CraftBukkit start
 import java.io.PrintStream;
@@ -24,9 +23,9 @@ import co.aikar.timings.SpigotTimings; // Spigot
 import org.bukkit.event.server.ServerCommandEvent;
 import org.bukkit.craftbukkit.util.Waitable;
 import org.bukkit.event.server.RemoteServerCommandEvent;
-import xyz.tavenservices.spigot.FulfillSpigot;
-import xyz.tavenservices.spigot.config.FulfillSpigotConfig;
-import xyz.tavenservices.spigot.config.KnockbackConfig;
+import xyz.swift.spigot.FulfillSpigot;
+import xyz.swift.spigot.config.FulfillSpigotConfig;
+import xyz.swift.spigot.config.KnockbackConfig;
 // CraftBukkit end
 
 public class DedicatedServer extends MinecraftServer implements IMinecraftServer {

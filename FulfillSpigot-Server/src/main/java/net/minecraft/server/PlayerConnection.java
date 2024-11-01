@@ -63,7 +63,7 @@ import co.aikar.timings.SpigotTimings; // Spigot
 // CraftBukkit end
 
 import org.github.paperspigot.PaperSpigotConfig; // PaperSpigot
-import xyz.tavenservices.spigot.config.FulfillSpigotConfig;
+import xyz.swift.spigot.config.FulfillSpigotConfig;
 
 public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerListBox {
 

@@ -1,11 +1,10 @@
 package org.bukkit.event.player;
 
-import java.net.InetAddress;
-import java.util.UUID;
-
-import com.destroystokyo.paper.paper.profile.PlayerProfile;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+
+import java.net.InetAddress;
+import java.util.UUID;
 
 /**
  * Stores details for players attempting to log in.
@@ -16,46 +15,22 @@ public class AsyncPlayerPreLoginEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     private Result result;
     private String message;
-    //private final String name; // PandaSpigot - Not used anymore
+    private final String name;
     private final InetAddress ipAddress;
-    //private final UUID uniqueId; // PandaSpigot - Not used anymore
+    private final UUID uniqueId;
 
     @Deprecated
     public AsyncPlayerPreLoginEvent(final String name, final InetAddress ipAddress) {
         this(name, ipAddress, null);
     }
 
-    // PandaSpigot start - Ability to change PlayerProfile in AsyncPreLoginEvent
     public AsyncPlayerPreLoginEvent(final String name, final InetAddress ipAddress, final UUID uniqueId) {
-        this(name, ipAddress, uniqueId, org.bukkit.Bukkit.createProfile(uniqueId, name));
-    }
-    private PlayerProfile profile;
-
-    /**
-     * Gets the PlayerProfile of the player logging in
-     * @return The Profile
-     */
-    public PlayerProfile getPlayerProfile() {
-        return profile;
-    }
-
-    /**
-     * Changes the PlayerProfile the player will login as
-     * @param profile The profile to use
-     */
-    public void setPlayerProfile(PlayerProfile profile) {
-        this.profile = profile;
-    }
-
-    public AsyncPlayerPreLoginEvent(final String name, final InetAddress ipAddress, final UUID uniqueId, final PlayerProfile profile) {
         super(true);
-        this.profile = profile;
-    // PandaSpigot end
         this.result = Result.ALLOWED;
         this.message = "";
-        //this.name = name; // PandaSpigot - Not used anymore
+        this.name = name;
         this.ipAddress = ipAddress;
-        //this.uniqueId = uniqueId; // PandaSpigot - Not used anymore
+        this.uniqueId = uniqueId;
     }
 
     /**
@@ -161,7 +136,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
      * @return the player's name
      */
     public String getName() {
-        return profile.getName(); // PandaSpigot - Use profile
+        return name;
     }
 
     /**
@@ -179,7 +154,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
      * @return The unique ID
      */
     public UUID getUniqueId() {
-        return profile.getId(); // PandaSpigot - Use profile
+        return uniqueId;
     }
 
     @Override

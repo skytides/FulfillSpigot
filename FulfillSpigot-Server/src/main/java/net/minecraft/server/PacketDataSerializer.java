@@ -26,8 +26,8 @@ import java.nio.channels.FileChannel;
 // PandaSpigot end
 
 import org.bukkit.craftbukkit.inventory.CraftItemStack; // CraftBukkit
-import xyz.tavenservices.spigot.CompatHacks;
-import xyz.tavenservices.spigot.network.VarIntUtil;
+import xyz.swift.spigot.CompatHacks;
+import xyz.swift.spigot.network.VarIntUtil;
 
 public class PacketDataSerializer extends ByteBuf {
 

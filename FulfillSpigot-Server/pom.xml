@@ -18,7 +18,7 @@
     </properties>
 
     <parent>
-        <groupId>xyz.tavenservices.spigot</groupId>
+        <groupId>xyz.swift.spigot</groupId>
         <artifactId>parent</artifactId>
         <version>dev-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
@@ -26,7 +26,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>xyz.tavenservices.spigot</groupId>
+            <groupId>xyz.swift.spigot</groupId>
             <artifactId>api</artifactId>
             <version>1.8.8-R0.2-SNAPSHOT</version>
             <type>jar</type>

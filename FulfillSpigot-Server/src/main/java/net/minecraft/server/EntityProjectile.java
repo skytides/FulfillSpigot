@@ -1,7 +1,7 @@
 package net.minecraft.server;
 
 import com.destroystokyo.paper.paper.event.entity.ProjectileCollideEvent;
-import xyz.tavenservices.spigot.config.FulfillSpigotConfig;
+import xyz.swift.spigot.config.FulfillSpigotConfig;
 
 import java.util.List;
 import java.util.UUID;

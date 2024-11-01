@@ -2,7 +2,7 @@ package net.minecraft.server;
 
 import com.google.common.collect.Maps;
 import org.github.paperspigot.exception.ServerInternalException;
-import xyz.tavenservices.spigot.config.FulfillSpigotConfig;
+import xyz.swift.spigot.config.FulfillSpigotConfig;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

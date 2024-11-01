@@ -1,6 +1,6 @@
 package net.minecraft.server;
 
-import xyz.tavenservices.spigot.util.FastRandom;
+import xyz.swift.spigot.util.FastRandom;
 
 import java.util.Arrays;
 import java.util.Random;

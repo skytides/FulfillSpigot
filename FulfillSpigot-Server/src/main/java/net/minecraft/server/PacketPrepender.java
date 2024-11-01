@@ -3,7 +3,7 @@ package net.minecraft.server;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import xyz.tavenservices.spigot.network.VarIntUtil;
+import xyz.swift.spigot.network.VarIntUtil;
 
 @io.netty.channel.ChannelHandler.Sharable // PandaSpigot
 public class PacketPrepender extends MessageToByteEncoder<ByteBuf> {

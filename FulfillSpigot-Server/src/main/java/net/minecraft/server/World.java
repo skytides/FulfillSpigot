@@ -24,12 +24,12 @@ import java.util.concurrent.Executors;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.github.paperspigot.event.ServerExceptionEvent;
 import org.github.paperspigot.exception.ServerInternalException;
-import xyz.tavenservices.spigot.config.FulfillSpigotConfig;
-import xyz.tavenservices.spigot.config.FulfillSpigotWorldConfig;
-import xyz.tavenservices.spigot.event.sound.EntitySoundEvent;
-import xyz.tavenservices.spigot.event.sound.PlayerSoundEvent;
-import xyz.tavenservices.spigot.event.sound.SoundEvent;
-import xyz.tavenservices.spigot.util.FastRandom;
+import xyz.swift.spigot.config.FulfillSpigotConfig;
+import xyz.swift.spigot.config.FulfillSpigotWorldConfig;
+import xyz.swift.spigot.event.sound.EntitySoundEvent;
+import xyz.swift.spigot.event.sound.PlayerSoundEvent;
+import xyz.swift.spigot.event.sound.SoundEvent;
+import xyz.swift.spigot.util.FastRandom;
 // PaperSpigot end
 
 // CraftBukkit start

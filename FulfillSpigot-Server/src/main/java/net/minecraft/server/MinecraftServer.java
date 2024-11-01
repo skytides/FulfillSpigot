@@ -40,10 +40,10 @@ import joptsimple.OptionSet;
 
 import co.aikar.timings.SpigotTimings; // Spigot
 import org.bukkit.craftbukkit.Main;
-import xyz.tavenservices.spigot.tickloop.ReentrantIAsyncHandler;
-import xyz.tavenservices.spigot.tickloop.TasksPerTick;
-import xyz.tavenservices.spigot.util.FastRandom;
-import xyz.tavenservices.spigot.world.AutoSaveJob;
+import xyz.swift.spigot.tickloop.ReentrantIAsyncHandler;
+import xyz.swift.spigot.tickloop.TasksPerTick;
+import xyz.swift.spigot.util.FastRandom;
+import xyz.swift.spigot.world.AutoSaveJob;
 // CraftBukkit end
 
 public abstract class MinecraftServer extends ReentrantIAsyncHandler<TasksPerTick> implements ICommandListener, IAsyncTaskHandler, IMojangStatistics { // PandaSpigot - Modern tick loop

@@ -1,7 +1,7 @@
 package net.minecraft.server;
 
 import com.google.common.base.Predicate;
-import xyz.tavenservices.spigot.util.FastRandom;
+import xyz.swift.spigot.util.FastRandom;
 
 import java.util.List;
 import java.util.Random;

@@ -7,7 +7,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.jafama.FastMath;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.entity.CraftEntity;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Vehicle;
@@ -16,9 +15,9 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageModifier;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.spigotmc.event.entity.EntityDismountEvent;
-import xyz.tavenservices.spigot.config.FulfillSpigotConfig;
-import xyz.tavenservices.spigot.config.KnockbackConfig;
-import xyz.tavenservices.spigot.knockback.CraftKnockbackProfile;
+import xyz.swift.spigot.config.FulfillSpigotConfig;
+import xyz.swift.spigot.config.KnockbackConfig;
+import xyz.swift.spigot.knockback.CraftKnockbackProfile;
 
 import java.util.*;
 // PaperSpigot end
