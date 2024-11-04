@@ -28,7 +28,7 @@ public class FulfillSpigot {
         initialize();
         reload();
         reloadKnockbackConfig();
-        LOGGER.info("FulfillSpigot version " + VERSION + " initialized.");
+        LOGGER.info("FulfillSpigot version " + VERSION + " initialized."); // lol
     }
 
     public static FulfillSpigot getInstance() {
