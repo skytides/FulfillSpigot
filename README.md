@@ -21,12 +21,6 @@ To compile FulfillSpigot, you'll need:
 - **JDK 8** (or above)
 - mvn clean install (from maven).
 
-## Team
-
-- **Skytides**: Author of FulfillSpigot.
-- **Savrien**: Original creator of the knockback system and a valued member of our development team.
-- **Venyo**: Maintainer.
-
 ## Patches
 **All credit goes to the people that made these patches.**<br>
 *Ensure all credits are properly given if you decide to use these in your own projects!*
