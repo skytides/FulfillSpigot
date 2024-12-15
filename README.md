@@ -1,8 +1,10 @@
-# FulfillSpigot [![Discord](https://img.shields.io/discord/1276852858221887508?label=Discord)](https://discord.gg/qDtjyaGZvm)
+# FulfillSpigot [![Discord](https://img.shields.io/discord/1276852858221887508?label=Discord)](https://discord.gg/QMAHrmDhrF)
 
-### This project is now being maintained!
+### This project is now abandoned
 
-Discord Server: https://discord.gg/qDtjyaGZvm
+This project has been officially abandoned due to numerous unresolved bugs and the lack of active maintainers.
+
+Discord Server: https://discord.gg/QMAHrmDhrF
 
 ## FulfillSpigot
 
