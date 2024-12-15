@@ -34,7 +34,6 @@ To compile FulfillSpigot, you'll need:
 [FulfillSpigot-0005] FastUtil for PlayerChunkMap for faster chunk loading
 [FulfillSpigot-0006] Remove Spigot metrics
 [FulfillSpigot-0007] Configurable tab packet spam.disconnect
-[FulfillSpigot-0008] ASYNC chunk loading and generating
 [FulfillSpigot-0009] Heavily optimize RegionFile and RegionFileCache
 [FulfillSpigot-0010] Faster packets
 [FulfillSpigot-0011] Optimize BiomeDecorator
@@ -48,9 +47,8 @@ To compile FulfillSpigot, you'll need:
 [FulfillSpigot-0019] Max cache size limit for RegionFileCache
 [FulfillSpigot-0020] Knockback Command and Knockback Reload command
 [FulfillSpigot-0021] Loaded chunks command
-[FulfillSpigot-0022] Remove automatic chunk unloading ai patch (FulfillSpigot-0025)
+[FulfillSpigot-0022] Remove automatic chunk unloading (FulfillSpigot-0025)
 [FulfillSpigot-0023] Remove dead NMS code
-[FulfillSpigot-0024] Revert Netty back to 4.1x
 
 [PandaSpigot-0015] Configuration Patch
 [PandaSpigot-0004] Backport modern tick loop
